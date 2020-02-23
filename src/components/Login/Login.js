@@ -27,7 +27,7 @@ function Login(props) {
     const { authTokens, setAuthTokens } = useAuth();
 
 
-    const baseUrl = 'http://localhost:8000/auth/';
+    const baseUrl = process.env.REACT_APP_SERVER_ADDRESS + 'auth/'
 
     function postLogin(e) {
         e.preventDefault();
