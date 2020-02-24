@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import Login from '../Login';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-} from 'react-router-dom';
-import PrivateRoute from '../../routes'
+import { BrowserRouter as Router, Switch, Route, } from 'react-router-dom';
 import { AuthContext, useAuth } from '../../helpers/context'
+import PrivateRoute from '../../routes'
+import Register from '../Register';
+import Login from '../Login';
+import NotFound from '../NotFound'
 
 function App() {
     // Try to set the tokens if there are
@@ -39,10 +36,6 @@ function App() {
     );
 }
 
-function Register(props) {
-    return <h2>Termino esto y me hago un cafecito con tostada</h2>
-}
-
 function Products(props) {
     const { setAuthTokens } = useAuth();
 
@@ -53,17 +46,6 @@ function Products(props) {
         <div>
             <h2>hola que hace</h2>
             <button onClick={handleLogout}>Logout</button>
-        </div>
-    )
-}
-
-function NotFound(props) {
-    return (
-        <div>
-            <h1>404 Page Not Found</h1>
-            <Link to='/'>
-                <button>Ir a casa</button>
-            </Link>
         </div>
     )
 }
