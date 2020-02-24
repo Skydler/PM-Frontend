@@ -16,7 +16,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import { Redirect, Link as RouterLink } from 'react-router-dom';
 import { useAuth } from '../../helpers/context';
 import axios from 'axios';
-import './Login.css'
+import '../../shared/css/authentication.css'
 
 function Login(props) {
     const [isLoggedIn, setLoggedIn] = useState(false);
@@ -102,7 +102,7 @@ function Login(props) {
                         <FormHelperText
                             error={true}
                         >
-                            The email or password you entered is incorrect
+                            The username or password you entered is incorrect
                         </FormHelperText>
                     }
                     <FormControlLabel
