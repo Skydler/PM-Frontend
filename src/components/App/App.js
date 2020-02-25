@@ -8,16 +8,19 @@ import NotFound from '../NotFound'
 
 function App() {
     // Try to set the tokens if there are
-    const tokens = localStorage.getItem('tokens');
+    const tokens = localStorage.getItem('tokens') || sessionStorage.getItem('tokens');
     const [authTokens, setAuthTokens] = useState(tokens);
 
     function setTokens(data, remember) {
         if (data) {
+            sessionStorage.setItem('tokens', JSON.stringify(data));
+
             if (remember) {
                 localStorage.setItem('tokens', JSON.stringify(data));
             }
         } else {
             localStorage.removeItem('tokens');
+            sessionStorage.removeItem('tokens');
         }
         setAuthTokens(data);
     }
