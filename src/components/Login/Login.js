@@ -24,13 +24,18 @@ function Login(props) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [remember, setRemember] = useState(false);
+
     const { authTokens, setAuthTokens } = useAuth();
+    // I use "authTokens" to check if the user has already logged in before,
+    // on the other hand I need to store authTokens in state to prevent an error I don't fully understand.
+    // Error ocurrs when authenticating. Warning: Can’t perform a React state update on an unmounted component
+    const [hasToken] = useState(authTokens);
 
 
     const baseUrl = process.env.REACT_APP_SERVER_ADDRESS + 'auth/'
 
-    function postLogin(e) {
-        e.preventDefault();
+    function postLogin(event) {
+        event.preventDefault();
         const body = {
             username: username,
             password: password,
@@ -45,16 +50,16 @@ function Login(props) {
                     setIsError(true);
                 }
             })
-            .catch(e => {
+            .catch(error => {
                 setIsError(true);
-                console.log(e);
+                throw error
             });
     }
 
     const locationState = props.location.state;
     const referer = locationState ? locationState.referer : '/products';
 
-    if (isLoggedIn || authTokens) {
+    if (isLoggedIn || hasToken) {
         return <Redirect to={referer} />
     }
 

@@ -38,9 +38,11 @@ function Register(props) {
             })
             .catch(e => {
                 console.log(e.response);
-                const { data } = e.response
-                setUsernameError(data.username);
-                setPasswordError(data.password);
+                if (e.response) {
+                    const { data } = e.response
+                    setUsernameError(data.username);
+                    setPasswordError(data.password);
+                }
             })
     }
 
