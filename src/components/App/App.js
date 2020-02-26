@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, } from 'react-router-dom';
-import { AuthContext, useAuth } from '../../helpers/context'
-import PrivateRoute from '../../routes'
-import Register from '../Register';
-import Login from '../Login';
-import NotFound from '../NotFound'
+import { AuthContext, useAuth } from 'helpers/context'
+import NotFound from 'components/Maintenance/NotFound'
+import Register from 'components/Users/Register';
+import Login from 'components/Users/Login';
+import PrivateRoute from 'routes'
 
 function App() {
     // Try to set the tokens if there are

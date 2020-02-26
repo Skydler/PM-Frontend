@@ -12,7 +12,7 @@ import Container from '@material-ui/core/Container';
 
 import { Link as RouterLink } from 'react-router-dom'
 import axios from 'axios';
-import '../../shared/css/authentication.css'
+import 'shared/css/authentication.css'
 
 function Register(props) {
     const [username, setUsername] = useState('');

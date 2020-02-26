@@ -14,9 +14,9 @@ import Container from '@material-ui/core/Container';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 import { Redirect, Link as RouterLink } from 'react-router-dom';
-import { useAuth } from '../../helpers/context';
+import { useAuth } from 'helpers/context';
 import axios from 'axios';
-import '../../shared/css/authentication.css'
+import 'shared/css/authentication.css'
 
 function Login(props) {
     const [isLoggedIn, setLoggedIn] = useState(false);
