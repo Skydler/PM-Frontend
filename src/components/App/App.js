@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, } from 'react-router-dom';
-import { AuthContext, useAuth } from 'helpers/context'
+import { AuthContext } from 'helpers/context'
 import NotFound from 'components/Maintenance/NotFound'
 import Register from 'components/Users/Register';
 import Login from 'components/Users/Login';
+import ProductList from 'components/Stock/Product'
 import PrivateRoute from 'routes'
 
 function App() {
@@ -31,26 +32,12 @@ function App() {
                 <Switch>
                     <Route path='/login' component={Login} />
                     <Route path='/register' component={Register} />
-                    <PrivateRoute path='/products' component={Products} />
+                    <PrivateRoute path='/products' component={ProductList} />
                     <Route component={NotFound} />
                 </Switch>
             </Router>
         </AuthContext.Provider>
     );
-}
-
-function Products(props) {
-    const { setAuthTokens } = useAuth();
-
-    function handleLogout() {
-        setAuthTokens();
-    }
-    return (
-        <div>
-            <h2>hola que hace</h2>
-            <button onClick={handleLogout}>Logout</button>
-        </div>
-    )
 }
 
 export default App;
