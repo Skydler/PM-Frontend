@@ -1,64 +1,43 @@
 import React, { useState } from 'react'
 
-import List from '@material-ui/core/List';
-import Container from '@material-ui/core/Container';
-
-import { Switch, Route, useRouteMatch, Link } from 'react-router-dom'
+import { Switch, Route, useRouteMatch } from 'react-router-dom'
 import { getProducts } from 'services/currentUser'
 
-import ProductListItem from './ProductListItem'
 import ProductDetail from './ProductDetail';
 import ProductCreate from './ProductCreate';
-import './ProductList.css'
-import { CssBaseline } from '@material-ui/core';
+import ProductListScreen from './Screens/ProductList/ProductListScreen'
+import ProductRow from './Screens/ProductList/ProductRow'
+
 
 function ProductList(props) {
-    const [products, setProducts] = useState()
-    let { path } = useRouteMatch()
-
-    function renderProducts(products) {
-        const listItems = products.map((prod) =>
-            <ProductListItem key={prod.id} product={prod} />
-        );
-        return listItems
-    }
+    const [rows, setRows] = useState()
+    const { path } = useRouteMatch()
 
     function retrieveProducts() {
         getProducts().then(products => {
-            const productList = renderProducts(products)
-            setProducts(productList)
+            const prod_rows = renderProducts(products)
+            setRows(prod_rows)
         })
     }
 
-    if (!products) {
+    function renderProducts(products) {
+        const prod_rows = products.map((prod) =>
+            <ProductRow key={prod.id} product={prod} />
+        );
+        return prod_rows
+    }
+
+    if (!rows) {
         retrieveProducts();
     }
 
     return (
         <Switch>
-            <Route exact path={path} render={() => <ProductListScreen products={products} />} />
+            <Route exact path={path} render={() => <ProductListScreen products={rows} />} />
             <Route path={`${path}/create`} component={ProductCreate} />
             <Route path={`${path}/:productID`} component={ProductDetail} />
         </Switch>
     );
 }
-
-function ProductListScreen(props) {
-    let { url } = useRouteMatch()
-
-    return (
-        <Container maxWidth='md'>
-            <CssBaseline />
-            <div>
-                <h1 className='central-title'>Productetes</h1>
-                <List>
-                    {props.products}
-                </List>
-                <Link to={`${url}/create`}>Crear producto</Link>
-            </div>
-        </Container>
-    )
-}
-
 
 export default ProductList
