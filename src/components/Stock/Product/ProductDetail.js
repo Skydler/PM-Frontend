@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
+
 import { useParams } from 'react-router-dom';
+
 import { getProductWithId } from 'services/products'
 import NotFound from 'components/Maintenance/NotFound'
+import ProductDetailScreen from './Screens/ProductDetail/ProductDetailScreen'
 
 
 function ProductDetail(props) {
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [product, setProduct] = useState();
 
@@ -19,29 +21,21 @@ function ProductDetail(props) {
                 setProduct(response.data)
             } catch (error) {
                 setError(true)
-            } finally {
-                setLoading(false)
             }
         }
         if (!product) {
             if (state) {
                 setProduct(state);
-                setLoading(false);
             } else {
                 fetchProduct();
             }
         }
     }, [product, productID, state])
 
-    if (loading) {
-        return 'Loading...';
-    }
     if (error) {
-        return <NotFound />
+        return <NotFound reason="Couldn't find the product you searched for. Sorry :(" />
     }
-    return (
-        <p>Hola amiguete, tu producto es {product.name}</p>
-    )
+    return !product ? 'Loading...' : (<ProductDetailScreen product={product} />)
 }
 
 export default ProductDetail

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import { TextField } from '@material-ui/core'
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 
 import { createProduct } from 'services/products'
 
@@ -21,39 +22,43 @@ function ProductCreate(props) {
     }
 
     return (
-        <form>
-            <TextField
-                required
-                label='Name: '
-                name='name'
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-            />
-            <TextField
-                required
-                label='Description: '
-                name='description'
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-            />
-            <TextField
-                required
-                label='Amount: '
-                name='amount'
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-            />
-            <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className='submit'
-                onClick={postProduct}
-            >
-                Create
-            </Button>
-        </form >
+        <Container maxWidth='md'>
+            <div>
+              <form>
+                  <TextField
+                      required
+                      label='Name: '
+                      name='name'
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                  />
+                  <TextField
+                      required
+                      label='Description: '
+                      name='description'
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                  />
+                  <TextField
+                      required
+                      label='Amount: '
+                      name='amount'
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                  />
+                  <Button
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      className='submit'
+                      onClick={postProduct}
+                  >
+                      Create
+                  </Button>
+              </form >
+            </div>
+        </Container>
     )
 }
 
