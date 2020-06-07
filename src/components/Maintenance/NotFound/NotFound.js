@@ -11,6 +11,8 @@ function NotFound(props) {
     return (
         <div>
             <h1>404 Page Not Found</h1>
+            <p>{props.reason ? props.reason : ''}</p>
+
             <button onClick={handleLogout}>Logout</button>
             <Link to='/products'>
                 <button>Ir a products</button>
