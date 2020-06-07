@@ -12,7 +12,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
 import Container from '@material-ui/core/Container';
-import { CssBaseline } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
 
 import './ProductList.css'
 
@@ -21,35 +21,38 @@ function ProductListScreen(props) {
 
     return (
         <Container maxWidth='md'>
-            <CssBaseline />
             <div>
                 <h1 className='central-title'>Dashboard</h1>
-                <TableContainer id='table'>
-                    <Table>
+                <Paper elevation={3}>
+                    <TableContainer id='table'>
+                        <Table>
 
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align='center'>Product name</TableCell>
-                                <TableCell align='center'>Current stock</TableCell>
-                                <TableCell align='center'>Liter cost</TableCell>
-                            </TableRow>
-                        </TableHead>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell align='center'>Product name</TableCell>
+                                    <TableCell align='center'>Current stock</TableCell>
+                                    <TableCell align='center'>Liter cost</TableCell>
+                                </TableRow>
+                            </TableHead>
 
-                        <TableBody>
-                            {props.products}
-                        </TableBody>
+                            <TableBody>
+                                {props.products}
+                            </TableBody>
 
-                        <TableFooter>
-                            <TableRow>
-                                <TableCell size='small' variant='body'>
-                                    Total Productos: {props.products ?
-                                        props.products.length : 'Couldn\'t find any products'}
-                                </TableCell>
-                            </TableRow>
-                        </TableFooter>
+                            <TableFooter>
+                                <TableRow>
+                                    <TableCell size='small' variant='body'>
+                                        Total Productos: {props.products ?
+                                            props.products.length : 'Couldn\'t find any products'}
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                </TableRow>
+                            </TableFooter>
 
-                    </Table>
-                </TableContainer>
+                        </Table>
+                    </TableContainer>
+                </Paper>
                 <div>
                     <Link to={`${url}/create`}>Crear producto</Link>
                 </div>

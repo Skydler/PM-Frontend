@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, } from 'react-router-dom';
 import { AuthContext } from 'helpers/context'
+import CssBaseline from '@material-ui/core/CssBaseline';
 import NotFound from 'components/Maintenance/NotFound'
 import Register from 'components/Users/Register';
 import Login from 'components/Users/Login';
@@ -29,6 +30,7 @@ function App() {
     return (
         <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
             <Router>
+                <CssBaseline />
                 <Switch>
                     <Route path='/login' component={Login} />
                     <Route path='/register' component={Register} />

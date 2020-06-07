@@ -13,7 +13,7 @@ function ProductList(props) {
     const [rows, setRows] = useState()
     const { path } = useRouteMatch()
 
-    function retrieveProducts() {
+    function fetchProducts() {
         getProducts().then(products => {
             const prod_rows = renderProducts(products)
             setRows(prod_rows)
@@ -28,7 +28,7 @@ function ProductList(props) {
     }
 
     if (!rows) {
-        retrieveProducts();
+        fetchProducts();
     }
 
     return (

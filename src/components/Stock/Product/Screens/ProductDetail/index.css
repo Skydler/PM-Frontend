@@ -1,0 +1,31 @@
+/* General */
+
+#container {
+    background-color: rgb(192, 213, 228);
+    height: 100vh;
+}
+
+#heading-container {
+    padding: 3rem;
+}
+
+/* Heading */
+
+.product-title {
+    font-size: 3rem;
+    font-weight: normal;
+    color: #62466b;
+}
+
+.product-description {
+    font-style: italic;
+    color: #313336;
+}
+
+/* Body */
+
+.grid-product-prop {
+    padding: 15px;
+    text-align: center;
+    color: #4e5155 !important;
+}
