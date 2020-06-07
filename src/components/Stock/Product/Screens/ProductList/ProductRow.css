@@ -4,10 +4,16 @@
 
 td, tfoot {
     background-color: #D5C9DF;
-    border-bottom: 1px solid white !important;
+}
+
+td {
+    border-bottom: 1px solid #f1dbf1 !important;
+}
+
+tfoot>tr>td {
+    border-bottom: none !important;
 }
 
 th {
     background-color: tomato;
-    border-bottom: 1px solid white !important;
 }

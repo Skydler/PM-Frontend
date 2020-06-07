@@ -1,4 +1,5 @@
 import axios from './index';
+import { fetchMultipleLinks } from './utils'
 
 export async function getUser() {
     const { data } = await axios.get('auth/users/me/');
@@ -18,13 +19,4 @@ export async function getSubProducts() {
 export async function getPackagingObjects() {
     const { packagingobject_set } = await getUser();
     return fetchMultipleLinks(packagingobject_set)
-}
-
-async function fetchMultipleLinks(linkList) {
-    const elements = [];
-    for (const link of linkList) {
-        const { data } = await axios.get(link);
-        elements.push(data);
-    }
-    return elements;
 }
