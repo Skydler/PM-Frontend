@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/PM-Frontend/static/css/main.98ee999f.chunk.css",
+    "main.js": "/PM-Frontend/static/js/main.bde18ec9.chunk.js",
+    "main.js.map": "/PM-Frontend/static/js/main.bde18ec9.chunk.js.map",
+    "runtime-main.js": "/PM-Frontend/static/js/runtime-main.699e64bf.js",
+    "runtime-main.js.map": "/PM-Frontend/static/js/runtime-main.699e64bf.js.map",
+    "static/js/2.706c3351.chunk.js": "/PM-Frontend/static/js/2.706c3351.chunk.js",
+    "static/js/2.706c3351.chunk.js.map": "/PM-Frontend/static/js/2.706c3351.chunk.js.map",
+    "index.html": "/PM-Frontend/index.html",
+    "precache-manifest.310fc590ddeb77b94dcde6a370f4c32e.js": "/PM-Frontend/precache-manifest.310fc590ddeb77b94dcde6a370f4c32e.js",
+    "service-worker.js": "/PM-Frontend/service-worker.js",
+    "static/css/main.98ee999f.chunk.css.map": "/PM-Frontend/static/css/main.98ee999f.chunk.css.map",
+    "static/js/2.706c3351.chunk.js.LICENSE": "/PM-Frontend/static/js/2.706c3351.chunk.js.LICENSE"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.699e64bf.js",
+    "static/js/2.706c3351.chunk.js",
+    "static/css/main.98ee999f.chunk.css",
+    "static/js/main.bde18ec9.chunk.js"
+  ]
+}
