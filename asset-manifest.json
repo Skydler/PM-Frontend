@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/PM-Frontend/static/css/main.98ee999f.chunk.css",
-    "main.js": "/PM-Frontend/static/js/main.edb1f0b6.chunk.js",
-    "main.js.map": "/PM-Frontend/static/js/main.edb1f0b6.chunk.js.map",
+    "main.js": "/PM-Frontend/static/js/main.0b242fa0.chunk.js",
+    "main.js.map": "/PM-Frontend/static/js/main.0b242fa0.chunk.js.map",
     "runtime-main.js": "/PM-Frontend/static/js/runtime-main.699e64bf.js",
     "runtime-main.js.map": "/PM-Frontend/static/js/runtime-main.699e64bf.js.map",
     "static/js/2.706c3351.chunk.js": "/PM-Frontend/static/js/2.706c3351.chunk.js",
     "static/js/2.706c3351.chunk.js.map": "/PM-Frontend/static/js/2.706c3351.chunk.js.map",
     "index.html": "/PM-Frontend/index.html",
-    "precache-manifest.77f8ab22495d9f387755bb7c8ecd0ce8.js": "/PM-Frontend/precache-manifest.77f8ab22495d9f387755bb7c8ecd0ce8.js",
+    "precache-manifest.f3dd127c766aaaeb419382c09b315368.js": "/PM-Frontend/precache-manifest.f3dd127c766aaaeb419382c09b315368.js",
     "service-worker.js": "/PM-Frontend/service-worker.js",
     "static/css/main.98ee999f.chunk.css.map": "/PM-Frontend/static/css/main.98ee999f.chunk.css.map",
     "static/js/2.706c3351.chunk.js.LICENSE": "/PM-Frontend/static/js/2.706c3351.chunk.js.LICENSE"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.699e64bf.js",
     "static/js/2.706c3351.chunk.js",
     "static/css/main.98ee999f.chunk.css",
-    "static/js/main.edb1f0b6.chunk.js"
+    "static/js/main.0b242fa0.chunk.js"
   ]
 }
