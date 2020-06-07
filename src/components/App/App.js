@@ -29,7 +29,7 @@ function App() {
 
     return (
         <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
-            <Router>
+            <Router basename="/PM-Frontend">
                 <CssBaseline />
                 <Switch>
                     <Route path='/login' component={Login} />
