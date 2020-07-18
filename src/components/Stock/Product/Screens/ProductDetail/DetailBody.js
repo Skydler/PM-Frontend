@@ -17,15 +17,15 @@ function DetailBody(props) {
             >
                 <GridProductProp
                     label='Current amount: '
-                    info={product.current_amount}
+                    info={product.current_amount + ' Lts.'}
                 />
                 <GridProductProp
-                    label='Makeable amount: '
-                    info={product.makeable_amount}
+                    label='Makeable with subproducts: '
+                    info={product.makeable_amount + ' Lts.'}
                 />
                 <GridProductProp
                     label='Base production cost: '
-                    info={product.production_cost_liter}
+                    info={'$' + product.production_cost_liter}
                 />
             </Grid>
         </div >

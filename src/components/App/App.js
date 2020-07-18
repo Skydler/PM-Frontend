@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import NotFound from 'components/Maintenance/NotFound'
 import Register from 'components/Users/Register';
 import Login from 'components/Users/Login';
-import ProductList from 'components/Stock/Product'
+import TopBar from 'components/Navigation/TopBar'
 import PrivateRoute from 'routes'
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
                 <Switch>
                     <Route path='/login' component={Login} />
                     <Route path='/register' component={Register} />
-                    <PrivateRoute path='/products' component={ProductList} />
+                    <PrivateRoute path='/products' component={TopBar} />
                     <Route component={NotFound} />
                 </Switch>
             </Router>

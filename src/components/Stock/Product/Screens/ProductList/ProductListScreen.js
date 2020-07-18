@@ -30,7 +30,7 @@ function ProductListScreen(props) {
                             <TableHead>
                                 <TableRow>
                                     <TableCell align='center'>Product name</TableCell>
-                                    <TableCell align='center'>Current stock</TableCell>
+                                    <TableCell align='center'>Current stock (Lts.)</TableCell>
                                     <TableCell align='center'>Liter cost</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -42,7 +42,7 @@ function ProductListScreen(props) {
                             <TableFooter>
                                 <TableRow>
                                     <TableCell size='small' variant='body'>
-                                        Total Productos: {props.products ?
+                                        Total Products: {props.products ?
                                             props.products.length : 'Couldn\'t find any products'}
                                     </TableCell>
                                     <TableCell></TableCell>
@@ -54,7 +54,7 @@ function ProductListScreen(props) {
                     </TableContainer>
                 </Paper>
                 <div>
-                    <Link to={`${url}/create`}>Crear producto</Link>
+                    <Link to={`${url}/create`}>Create product</Link>
                 </div>
             </div>
         </Container>

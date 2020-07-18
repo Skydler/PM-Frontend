@@ -1,0 +1,16 @@
+.menu-button {
+    margin-right: 1em !important;
+}
+
+.title {
+    flex-grow: 1;
+}
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.profile-menu {
+    margin-top: 30px;
+}
