@@ -14,36 +14,36 @@ import TableCell from '@material-ui/core/TableCell';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 
-import './ProductList.css'
+import './ProductTable.css'
 
-function ProductListScreen(props) {
+function ProductTableScreen(props) {
     let { url } = useRouteMatch();
 
     return (
         <Container maxWidth='md'>
             <div>
-                <h1 className='central-title'>Dashboard</h1>
+                <h1 className='central-title'>{props.title}</h1>
                 <Paper elevation={3}>
                     <TableContainer id='table'>
                         <Table>
 
                             <TableHead>
                                 <TableRow>
-                                    <TableCell align='center'>Product name</TableCell>
+                                    <TableCell align='center'>Name</TableCell>
                                     <TableCell align='center'>Current stock (Lts.)</TableCell>
                                     <TableCell align='center'>Liter cost</TableCell>
                                 </TableRow>
                             </TableHead>
 
                             <TableBody>
-                                {props.products}
+                                {props.rows}
                             </TableBody>
 
                             <TableFooter>
                                 <TableRow>
                                     <TableCell size='small' variant='body'>
-                                        Total Products: {props.products ?
-                                            props.products.length : 'Couldn\'t find any products'}
+                                        Total: {props.rows ?
+                                            props.rows.length : 'Couldn\'t find any products'}
                                     </TableCell>
                                     <TableCell></TableCell>
                                     <TableCell></TableCell>
@@ -54,11 +54,11 @@ function ProductListScreen(props) {
                     </TableContainer>
                 </Paper>
                 <div>
-                    <Link to={`${url}/create`}>Create product</Link>
+                    <Link to={`${url}/create`}>Create new</Link>
                 </div>
             </div>
         </Container>
     )
 }
 
-export default ProductListScreen
+export default ProductTableScreen

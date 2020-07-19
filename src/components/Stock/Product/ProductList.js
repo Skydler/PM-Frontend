@@ -5,8 +5,8 @@ import { getProducts } from 'services/currentUser'
 
 import ProductDetail from './ProductDetail';
 import ProductCreate from './ProductCreate';
-import ProductListScreen from './Screens/ProductList/ProductListScreen'
-import ProductRow from './Screens/ProductList/ProductRow'
+import ProductTableScreen from '../Screens/ProductTable/ProductTable'
+import ProductRow from '../Screens/ProductTable/ProductRow'
 
 
 function ProductList(props) {
@@ -33,7 +33,7 @@ function ProductList(props) {
 
     return (
         <Switch>
-            <Route exact path={path} render={() => <ProductListScreen products={rows} />} />
+            <Route exact path={path} render={() => <ProductTableScreen rows={rows} title='Products' />} />
             <Route path={`${path}/create`} component={ProductCreate} />
             <Route path={`${path}/:productID`} component={ProductDetail} />
         </Switch>

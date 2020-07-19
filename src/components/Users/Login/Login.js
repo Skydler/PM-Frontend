@@ -56,7 +56,7 @@ function Login(props) {
     }
 
     const locationState = props.location.state;
-    const referer = locationState ? locationState.referer : '/products';
+    const referer = locationState ? locationState.referer : '/home';
 
     if (isLoggedIn || hasToken) {
         return <Redirect to={referer} />
@@ -129,11 +129,6 @@ function Login(props) {
                         Log In
                     </Button>
                     <Grid container>
-                        {/* <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Forgot password?
-                            </Link>
-                        </Grid> */}
                         <Grid item>
                             <Link component={RouterLink} to="/register" >
                                 {"Don't have an account? Sign Up"}

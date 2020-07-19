@@ -34,7 +34,7 @@ function ProductRow(props) {
                 {product.current_amount}
             </TableCell>
             <TableCell align='right'>
-                {product.production_cost_liter}
+                {product.price}
             </TableCell>
         </TableRow>
     )

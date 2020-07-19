@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react'
 
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
-import { getProductWithId } from 'services/products'
+import { getProductWithId, deleteProduct } from 'services/products'
 import NotFound from 'components/Maintenance/NotFound'
-import ProductDetailScreen from './Screens/ProductDetail/ProductDetailScreen'
+import ProductDetailScreen from '../Screens/ProductDetail/ProductDetailScreen'
+import DetailExtra from './DetailExtra'
 
 
 function ProductDetail(props) {
     const [error, setError] = useState(false);
     const [product, setProduct] = useState();
+    const history = useHistory();
 
     const { state } = props.location;
     let { productID } = useParams();
@@ -35,7 +37,19 @@ function ProductDetail(props) {
     if (error) {
         return <NotFound reason="Couldn't find the product you searched for. Sorry :(" />
     }
-    return !product ? 'Loading...' : (<ProductDetailScreen product={product} />)
+
+    function handleDelete(id) {
+        deleteProduct(id).then(response => {
+            history.push("/home/products")
+        })
+    }
+
+    return !product ? 'Loading...' :
+        (<ProductDetailScreen
+            product={product}
+            deleteFunction={handleDelete}
+            extraDetail={DetailExtra}
+        />)
 }
 
 export default ProductDetail
