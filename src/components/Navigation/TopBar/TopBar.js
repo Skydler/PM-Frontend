@@ -10,7 +10,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 // import MenuIcon from '@material-ui/icons/Menu';
 
 import { getUser } from 'services/currentUser'
-import ProductList from 'components/Stock/Product'
 import { Link } from 'react-router-dom'
 import { useAuth } from 'helpers/context';
 
@@ -48,7 +47,7 @@ export default function TopAppBar() {
             <MenuIcon />
           </IconButton> */}
           <Typography variant="h6" className="title">
-            <Link to='/products' className="link">
+            <Link to='/home' className="link">
               Product Manager
             </Link>
           </Typography>
@@ -64,7 +63,6 @@ export default function TopAppBar() {
           </Menu>
         </Toolbar>
       </AppBar>
-      <ProductList></ProductList>
     </div>
   );
 }

@@ -7,8 +7,8 @@ function NotFound(props) {
             <h1>404 Page Not Found</h1>
             <p>{props.reason ? props.reason : ''}</p>
 
-            <Link to='/products'>
-                <button>Ir a products</button>
+            <Link to='/home'>
+                <button>Back to home</button>
             </Link>
         </div>
     )
