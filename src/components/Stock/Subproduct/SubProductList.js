@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
-import { Switch, Route, useRouteMatch } from 'react-router-dom'
-import { getSubProducts } from 'services/currentUser'
+import { Switch, Route, useRouteMatch, useLocation } from 'react-router-dom'
+import { getSubproducts } from 'services/currentUser'
 
 import SubproductDetail from './SubproductDetail';
 import SubproductCreate from './SubproductCreate';
@@ -10,26 +10,20 @@ import ProductRow from '../Screens/ProductTable/ProductRow'
 
 
 function SubproductList(props) {
-    const [rows, setRows] = useState()
-    const { path } = useRouteMatch()
+    const [rows, setRows] = useState();
+    const { path } = useRouteMatch();
+    const location = useLocation();
 
-    function fetchSubProducts() {
-        getSubProducts().then(subproducts => {
-            const subprod_rows = renderProducts(subproducts)
-            setRows(subprod_rows)
-        })
-    }
-
-    function renderProducts(products) {
-        const prod_rows = products.map((prod) =>
-            <ProductRow key={prod.id} product={prod} />
-        );
-        return prod_rows
-    }
-
-    if (!rows) {
-        fetchSubProducts();
-    }
+    useEffect(() => {
+        if (location.pathname === '/home/subproducts') {
+            getSubproducts().then(subproducts => {
+                const prod_rows = subproducts.map(prod =>
+                    <ProductRow key={prod.id} product={prod} />
+                );
+                setRows(prod_rows);
+            })
+        }
+    }, [location])
 
     return (
         <Switch>

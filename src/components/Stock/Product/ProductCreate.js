@@ -8,25 +8,27 @@ import { useHistory } from 'react-router-dom';
 import { createProduct } from 'services/products'
 
 function ProductCreate(props) {
+    const [form, setForm] = useState({
+        name: '',
+        description: '',
+        current_amount: '',
+    })
+
     const [isError, setIsError] = useState(false);
-    const [name, setName] = useState('')
-    const [description, setDescription] = useState('')
-    const [amount, setAmount] = useState('')
     const history = useHistory();
 
     function postProduct(event) {
         event.preventDefault();
-        const body = {
-            name: name,
-            description: description,
-            current_amount: amount,
-        }
-        createProduct(body).then(response => {
+        createProduct(form).then(() => {
             history.push("/home/products")
         }).catch(error => {
             setIsError(true);
             throw error;
         });
+    }
+
+    function updateForm(event) {
+        setForm({ ...form, [event.target.name]: event.target.value })
     }
 
     return (
@@ -38,24 +40,24 @@ function ProductCreate(props) {
                         error={isError}
                         label='Name: '
                         name='name'
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={form.name}
+                        onChange={updateForm}
                     />
                     <TextField
                         required
                         error={isError}
                         label='Description: '
                         name='description'
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
+                        value={form.description}
+                        onChange={updateForm}
                     />
                     <TextField
                         required
                         error={isError}
                         label='Amount: '
-                        name='amount'
-                        value={amount}
-                        onChange={(e) => setAmount(e.target.value)}
+                        name='current_amount'
+                        value={form.amount}
+                        onChange={updateForm}
                     />
                     <Button
                         type="submit"

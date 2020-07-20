@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react'
-
 import { useParams, useHistory } from 'react-router-dom';
-
 import { getSubProductWithId, deleteSubproduct } from 'services/products'
 import NotFound from 'components/Maintenance/NotFound'
 import ProductDetailScreen from '../Screens/ProductDetail/ProductDetailScreen'
 
-
 function SubproductDetail(props) {
-    const [error, setError] = useState(false);
     const [product, setProduct] = useState();
-    const history = useHistory();
+    const [error, setError] = useState(false);
 
-    const { state } = props.location;
     let { productID } = useParams();
+    const { state } = props.location;   //Product recieved from row of product table
+    const history = useHistory();
 
     useEffect(() => {
         async function fetchProduct() {
@@ -24,14 +21,13 @@ function SubproductDetail(props) {
                 setError(true)
             }
         }
-        if (!product) {
-            if (state) {
-                setProduct(state);
-            } else {
-                fetchProduct();
-            }
+
+        if (state) {
+            setProduct(state);
+        } else {
+            fetchProduct();
         }
-    }, [product, productID, state])
+    }, [productID, state])
 
     if (error) {
         return <NotFound reason="Couldn't find the subproduct you searched for. Sorry :(" />
@@ -43,7 +39,11 @@ function SubproductDetail(props) {
         })
     }
 
-    return !product ? 'Loading...' : (<ProductDetailScreen product={product} deleteFunction={handleDelete} />)
+    return !product ? 'Loading...' :
+        (<ProductDetailScreen
+            product={product}
+            deleteFunction={handleDelete}
+        />)
 }
 
 export default SubproductDetail

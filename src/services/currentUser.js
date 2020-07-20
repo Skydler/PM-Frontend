@@ -11,7 +11,7 @@ export async function getProducts() {
     return fetchMultipleLinks(product_set);
 }
 
-export async function getSubProducts() {
+export async function getSubproducts() {
     const { subproduct_set } = await getUser();
     return fetchMultipleLinks(subproduct_set)
 }

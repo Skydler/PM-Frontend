@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
-import { Switch, Route, useRouteMatch } from 'react-router-dom'
+import { Switch, Route, useRouteMatch, useLocation } from 'react-router-dom'
 import { getProducts } from 'services/currentUser'
 
 import ProductDetail from './ProductDetail';
@@ -10,26 +10,20 @@ import ProductRow from '../Screens/ProductTable/ProductRow'
 
 
 function ProductList(props) {
-    const [rows, setRows] = useState()
-    const { path } = useRouteMatch()
+    const [rows, setRows] = useState();
+    const { path } = useRouteMatch();
+    const location = useLocation();
 
-    function fetchProducts() {
-        getProducts().then(products => {
-            const prod_rows = renderProducts(products)
-            setRows(prod_rows)
-        })
-    }
-
-    function renderProducts(products) {
-        const prod_rows = products.map((prod) =>
-            <ProductRow key={prod.id} product={prod} />
-        );
-        return prod_rows
-    }
-
-    if (!rows) {
-        fetchProducts();
-    }
+    useEffect(() => {
+        if (location.pathname === '/home/products') {
+            getProducts().then(products => {
+                const prod_rows = products.map(prod =>
+                    <ProductRow key={prod.id} product={prod} />
+                );
+                setRows(prod_rows);
+            })
+        }
+    }, [location])
 
     return (
         <Switch>

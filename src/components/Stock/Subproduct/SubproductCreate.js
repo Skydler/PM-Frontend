@@ -8,28 +8,27 @@ import { createSubproduct } from 'services/products'
 import { useHistory } from 'react-router-dom';
 
 function SubproductCreate(props) {
+    const [form, setForm] = useState({
+        name: '',
+        description: '',
+        current_amount: '',
+        price: '',
+    });
     const [isError, setIsError] = useState(false);
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const [amount, setAmount] = useState('');
-    const [price, setPrice] = useState('');
     const history = useHistory();
 
     function postSubproduct(event) {
         event.preventDefault();
-        const body = {
-            name: name,
-            description: description,
-            current_amount: amount,
-            price: price,
-        }
-
-        createSubproduct(body).then(response => {
+        createSubproduct(form).then(response => {
             history.push("/home/subproducts")
         }).catch(error => {
             setIsError(true);
             throw error;
         });
+    }
+
+    function updateForm(event) {
+        setForm({ ...form, [event.target.name]: event.target.value })
     }
 
     return (
@@ -41,32 +40,32 @@ function SubproductCreate(props) {
                         error={isError}
                         label='Name: '
                         name='name'
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={form.name}
+                        onChange={updateForm}
                     />
                     <TextField
                         required
                         error={isError}
                         label='Description: '
                         name='description'
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
+                        value={form.description}
+                        onChange={updateForm}
                     />
                     <TextField
                         required
                         error={isError}
                         label='Amount: '
-                        name='amount'
-                        value={amount}
-                        onChange={(e) => setAmount(e.target.value)}
+                        name='current_amount'
+                        value={form.amount}
+                        onChange={updateForm}
                     />
                     <TextField
                         required
                         error={isError}
                         label='Price: '
                         name='price'
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
+                        value={form.price}
+                        onChange={updateForm}
                     />
                     <Button
                         type="submit"

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
-
 import { useParams, useHistory } from 'react-router-dom';
-
 import { getProductWithId, deleteProduct } from 'services/products'
 import NotFound from 'components/Maintenance/NotFound'
 import ProductDetailScreen from '../Screens/ProductDetail/ProductDetailScreen'
@@ -9,12 +7,13 @@ import DetailExtra from './DetailExtra'
 
 
 function ProductDetail(props) {
-    const [error, setError] = useState(false);
     const [product, setProduct] = useState();
+    const [error, setError] = useState(false);
+
+    let { productID } = useParams();
+    const { state } = props.location;   //Product recieved from row of product table
     const history = useHistory();
 
-    const { state } = props.location;
-    let { productID } = useParams();
 
     useEffect(() => {
         async function fetchProduct() {
@@ -25,21 +24,20 @@ function ProductDetail(props) {
                 setError(true)
             }
         }
-        if (!product) {
-            if (state) {
-                setProduct(state);
-            } else {
-                fetchProduct();
-            }
+
+        if (state) {
+            setProduct(state);
+        } else {
+            fetchProduct();
         }
-    }, [product, productID, state])
+    }, [productID, state])
 
     if (error) {
         return <NotFound reason="Couldn't find the product you searched for. Sorry :(" />
     }
 
     function handleDelete(id) {
-        deleteProduct(id).then(response => {
+        deleteProduct(id).then(() => {
             history.push("/home/products")
         })
     }
