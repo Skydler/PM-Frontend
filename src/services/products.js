@@ -18,8 +18,8 @@ export function createSubproduct(body) {
 }
 
 export function getComponentsOfProduct(product) {
-    const { components } = product;
-    return fetchMultipleLinks(components);
+    const { compositions } = product;
+    return fetchMultipleLinks(compositions);
 }
 
 export function deleteProduct(id) {

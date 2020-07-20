@@ -1,50 +1,68 @@
 import React, { useState } from 'react'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-// import { getComponentsOfProduct } from 'services/products'
-
+import { getComponentsOfProduct } from 'services/products'
+import axios from 'services/index'
+import { ListSubheader } from '@material-ui/core';
 
 function DetailExtra(props) {
-    // const [components, setComponents] = useState()
-    const [components] = useState()
+    const [components, setComponents] = useState()
     const product = props.product
 
-    // Acá podría ir el listado de los subproductos con los que se conforma este producto si tiene
-    // pensar más
+    function handleRequests() {
+        getComponentsOfProduct(product).then(componentsArray => {
+            const componentsList = renderComponents(componentsArray);
+            setComponents(componentsList);
+        })
 
-    // function renderComponents(components) {
-    //     const components_list = components.map(comp =>
-    //         // <ProductRow key={prod.id} product={prod} />
-    //         <ListItem key={comp.id} >comp.name</ListItem>
-    //     )
-    //     return components_list
-    // }
+    }
 
-    // function fetchCompositions() {
-    //     getComponentsOfProduct(props.product).then(componentsArray => {
-    //         const componentsList = renderComponents(componentsArray);
-    //         setComponents(componentsList);
-    //     })
-    // }
+    function renderComponents(components) {
+        const components_list = components.map(comp =>
+            <SubProductListItem composition={comp} />
+        )
+        return components_list
+    }
 
-    function renderMeasures() {
-        return <ListItem>Makeable amount: {product.makeable_amount}</ListItem>
+    if (!components) {
+        handleRequests();
     }
 
     return (
 
         <div>
-
             <List>
+                <ListItem>Makeable amount: {product.makeable_amount}</ListItem>
+            </List>
+
+            <List
+                subheader={
+                    <ListSubheader component="div">
+                        Made with:
+                    </ListSubheader>
+                }
+            >
                 {components}
             </List>
-
-            <List>
-                {renderMeasures()}
-            </List>
-
-        </div>
+        </div >
     )
+}
+
+function SubProductListItem(props) {
+    const [subproduct, setSubproduct] = useState('');
+    const comp = props.composition
+
+    function handleRequests() {
+        axios.get(comp.subproduct).then(response =>
+            setSubproduct(response.data)
+        )
+    }
+
+    if (!subproduct) {
+        handleRequests()
+    }
+
+    return <ListItem key={comp.id} >{`${subproduct.name}: ${comp.quantity}`}</ListItem>
 }
 
 export default DetailExtra
