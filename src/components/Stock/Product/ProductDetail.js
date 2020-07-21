@@ -11,26 +11,17 @@ function ProductDetail(props) {
     const [error, setError] = useState(false);
 
     let { productID } = useParams();
-    const { state } = props.location;   //Product recieved from row of product table
     const history = useHistory();
 
 
     useEffect(() => {
-        async function fetchProduct() {
-            try {
-                const response = await getProductWithId(productID)
-                setProduct(response.data)
-            } catch (error) {
-                setError(true)
-            }
-        }
-
-        if (state) {
-            setProduct(state);
-        } else {
-            fetchProduct();
-        }
-    }, [productID, state])
+        getProductWithId(productID)
+            .then(response => setProduct(response.data))
+            .catch(error => {
+                setError(true);
+                throw error;
+            })
+    }, [productID])
 
     if (error) {
         return <NotFound reason="Couldn't find the product you searched for. Sorry :(" />
@@ -42,10 +33,15 @@ function ProductDetail(props) {
         })
     }
 
+    function refreshProduct() {
+        getProductWithId(productID).then(response => setProduct(response.data));
+    }
+
     return !product ? 'Loading...' :
         (<ProductDetailScreen
             product={product}
             deleteFunction={handleDelete}
+            refreshFunction={refreshProduct}
             extraDetail={DetailExtra}
         />)
 }

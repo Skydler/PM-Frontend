@@ -17,7 +17,11 @@ export function createSubproduct(body) {
     return axios.post('/api/subproducts/', body);
 }
 
-export function getComponentsOfProduct(product) {
+export function createComposition(body) {
+    return axios.post('/api/compositions/', body);
+}
+
+export function getCompositionsOfProduct(product) {
     const { compositions } = product;
     return fetchMultipleLinks(compositions);
 }
@@ -28,4 +32,8 @@ export function deleteProduct(id) {
 
 export function deleteSubproduct(id) {
     return axios.delete(`/api/subproducts/${id}`)
+}
+
+export function deleteComposition(id) {
+    return axios.delete(`/api/compositions/${id}`)
 }

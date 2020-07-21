@@ -9,25 +9,16 @@ function SubproductDetail(props) {
     const [error, setError] = useState(false);
 
     let { productID } = useParams();
-    const { state } = props.location;   //Product recieved from row of product table
     const history = useHistory();
 
     useEffect(() => {
-        async function fetchProduct() {
-            try {
-                const response = await getSubProductWithId(productID)
-                setProduct(response.data)
-            } catch (error) {
-                setError(true)
-            }
-        }
-
-        if (state) {
-            setProduct(state);
-        } else {
-            fetchProduct();
-        }
-    }, [productID, state])
+        getSubProductWithId(productID)
+            .then(response => setProduct(response.data))
+            .catch(error => {
+                setError(true);
+                throw error;
+            })
+    }, [productID])
 
     if (error) {
         return <NotFound reason="Couldn't find the subproduct you searched for. Sorry :(" />

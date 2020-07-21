@@ -9,10 +9,6 @@ function DetailHeading(props) {
     const product = props.product
     const deleteFunction = props.deleteFunction
 
-    function handleClick(event) {
-        deleteFunction(product.id)
-    }
-
     return (
         <div id='heading-container'>
             <div className='text-heading'>
@@ -20,13 +16,12 @@ function DetailHeading(props) {
                 <p className='product-description'>{product.description}</p>
             </div>
             <div>
-                <IconButton edge='end' onClick={handleClick}>
+                <IconButton edge='end' onClick={() => deleteFunction(product.id)}>
                     <DeleteIcon />
                 </IconButton>
             </div>
         </div>
     )
-
 }
 
 export default DetailHeading

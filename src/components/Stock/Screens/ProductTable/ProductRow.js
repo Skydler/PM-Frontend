@@ -20,10 +20,7 @@ function ProductRow(props) {
                     color='inherit'
                     underline='none'
                     component={RouterLink}
-                    to={{
-                        pathname: `${url}/${product.id}`,
-                        state: product,
-                    }}
+                    to={`${url}/${product.id}`}
                 >
                     <div>
                         {product.name}
