@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -6,35 +6,25 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-// import IconButton from '@material-ui/core/IconButton';
-// import MenuIcon from '@material-ui/icons/Menu';
-
-import { getUser } from 'services/currentUser'
-import { Link } from 'react-router-dom'
-import { useAuth } from 'helpers/context';
+import {Link} from 'react-router-dom'
+import {useAuth} from 'helpers/context';
 
 import './TopBar.css'
 
-export default function TopAppBar() {
-  const [username, setUsername] = useState();
+export default function TopAppBar(props) {
   const [anchorEl, setAnchorEl] = useState(null);
-  const { setAuthTokens } = useAuth();
-
-  if (!username) {
-    getUser().then((user) => {
-      setUsername(user.username);
-    });
-  }
+  const {setAuthTokens} = useAuth();
+  const user = props.user;
 
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
   }
 
-  function handleClose(event) {
+  function handleClose() {
     setAnchorEl(null);
   }
 
-  function handleLogout(event) {
+  function handleLogout() {
     setAuthTokens(null);
   }
 
@@ -42,16 +32,12 @@ export default function TopAppBar() {
     <div>
       <AppBar position="static">
         <Toolbar>
-          {/* Maybe in the future it serves a purpose
-          <IconButton edge="start" className="menu-button" color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton> */}
           <Typography variant="h6" className="title">
             <Link to='/home' className="link">
               Product Manager
             </Link>
           </Typography>
-          <Button color="inherit" onClick={handleClick}>{username}</Button>
+          <Button color="inherit" onClick={handleClick}> {user ? user.username : ''} </Button>
           <Menu
             className="profile-menu"
             anchorEl={anchorEl}
