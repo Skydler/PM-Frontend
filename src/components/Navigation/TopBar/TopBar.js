@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,13 +8,14 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {Link} from 'react-router-dom'
 import {useAuth} from 'helpers/context';
+import {UserContext} from 'hooks/userContext'
 
 import './TopBar.css'
 
-export default function TopAppBar(props) {
+export default function TopAppBar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const {setAuthTokens} = useAuth();
-  const user = props.user;
+  const user = useContext(UserContext);
 
   function handleClick(event) {
     setAnchorEl(event.currentTarget);

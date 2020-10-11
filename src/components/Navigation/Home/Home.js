@@ -5,6 +5,7 @@ import SubProductList from 'components/Stock/Subproduct'
 import HomeScreen from './HomeScreen'
 import TopBar from 'components/Navigation/TopBar'
 import {getUser} from 'services/currentUser'
+import {UserContext} from 'hooks/userContext'
 
 function Home() {
     const [user, setUser] = useState();
@@ -18,16 +19,14 @@ function Home() {
 
     return (
         <div>
-            <TopBar user={user}></TopBar>
-            <Switch>
-                <Route exact path={path} component={HomeScreen} />
-                <Route path={`${path}/products`} render={(props) =>
-                    <ProductList {...props} user={user} />
-                } />
-                <Route path={`${path}/subproducts`} render={(props) =>
-                    <SubProductList {...props} user={user} />
-                } />
-            </Switch>
+            <UserContext.Provider value={user}>
+                <TopBar></TopBar>
+                <Switch>
+                    <Route exact path={path} component={HomeScreen} />
+                    <Route path={`${path}/products`} component={ProductList} />
+                    <Route path={`${path}/subproducts`} component={SubProductList} />
+                </Switch>
+            </UserContext.Provider>
         </div>
     )
 }
