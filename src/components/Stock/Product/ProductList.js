@@ -1,33 +1,40 @@
-import React, { useState, useEffect } from 'react'
-
-import { Switch, Route, useRouteMatch, useLocation } from 'react-router-dom'
-import { getProducts } from 'services/currentUser'
-
-import ProductDetail from './ProductDetail';
+import React, {useEffect, useState, useContext} from 'react';
+import {Route, Switch, useLocation, useRouteMatch} from 'react-router-dom';
+import {getProducts} from 'services/currentUser';
+import ProductRow from '../Screens/ProductTable/ProductRow';
+import ProductTableScreen from '../Screens/ProductTable/ProductTable';
 import ProductCreate from './ProductCreate';
-import ProductTableScreen from '../Screens/ProductTable/ProductTable'
-import ProductRow from '../Screens/ProductTable/ProductRow'
+import ProductDetail from './ProductDetail';
+import {UserContext} from 'hooks/userContext'
 
 
-function ProductList(props) {
+function ProductList() {
     const [rows, setRows] = useState();
-    const { path } = useRouteMatch();
+    const [loading, setLoading] = useState(true);
+    const {path} = useRouteMatch();
     const location = useLocation();
+    const user = useContext(UserContext);
 
     useEffect(() => {
-        if (location.pathname === '/home/products') {
-            getProducts().then(products => {
+        // pathname must be /home/products because this function is executed
+        // from inside a product detail (cause of route below)
+        //
+        // user mustn't be undefined to prevent from repeating querys
+        // to get the current user
+        if (location.pathname === '/home/products' && user !== undefined) {
+            getProducts(user).then(products => {
                 const prod_rows = products.map(prod =>
                     <ProductRow key={prod.id} product={prod} />
                 );
                 setRows(prod_rows);
+                setLoading(false);
             })
         }
-    }, [location])
+    }, [location, user])
 
     return (
         <Switch>
-            <Route exact path={path} render={() => <ProductTableScreen rows={rows} title='Products' />} />
+            <Route exact path={path} render={() => <ProductTableScreen rows={rows} title='Products' loading={loading} />} />
             <Route path={`${path}/create`} component={ProductCreate} />
             <Route path={`${path}/:productID`} component={ProductDetail} />
         </Switch>
