@@ -1,31 +1,33 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'services/index'
-import { getCompositionsOfProduct, createComposition, deleteComposition } from 'services/products'
-
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Input from '@material-ui/core/Input';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import { getSubproducts } from 'services/currentUser';
+import IconButton from '@material-ui/core/IconButton';
+import Input from '@material-ui/core/Input';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import './DetailExtra.css'
+
+import React, {useEffect, useState, useContext} from 'react';
+import {getSubproducts} from 'services/currentUser';
+import {createComposition, deleteComposition, getCompositionsOfProduct} from 'services/products';
+import {UserContext} from 'hooks/userContext';
+import './DetailExtra.css';
+
 
 function DetailExtra(props) {
     const product = props.product;
     const refreshProduct = props.refreshFunction;
     const [stock, setStock] = useState({
         compositions: [],
-        subproducts: [],
+        usedSubproducts: [],
+        notUsedSubproducts: [],
     });
     const [form, setForm] = useState({
         subproduct: '',
@@ -33,42 +35,50 @@ function DetailExtra(props) {
         quantity: '',
     });
     const [open, setOpen] = useState(false);
+    const user = useContext(UserContext);
 
     useEffect(() => {
+        // All of this filtering should be done by the backend
+        // but for now let's leave it this way so I can get a simple prototype working
         getCompositionsOfProduct(product).then(compositions => {
-            getSubproducts().then(subproducts => {
-                const currentSubproducts = compositions.map(comp => comp.subproduct);
-                const filtered_subproducts = subproducts.filter(subp => !currentSubproducts.includes(subp.url));
+            getSubproducts(user).then(totalSubproducts => {
+                const CompSubproductUrls = compositions.map(comp => comp.subproduct);
+
+                const notUsedSubproducts = totalSubproducts.filter(subp => !CompSubproductUrls.includes(subp.url));
+                const usedSubproducts = totalSubproducts.filter(subp => CompSubproductUrls.includes(subp.url));
                 setStock({
                     compositions: compositions,
-                    subproducts: filtered_subproducts,
+                    usedSubproducts: usedSubproducts,
+                    notUsedSubproducts: notUsedSubproducts,
                 });
             });
         })
-    }, [product])
+    }, [product, user])
 
     function renderIngredients() {
-        const items = stock.compositions.map(comp =>
-            <SubProductListItem composition={comp} refreshFunction={refreshProduct} />
+        const items = stock.usedSubproducts.map(subp => {
+            const quantity = stock.compositions.filter(comp => comp.subproduct === subp.url)[0].quantity;
+            return <SubProductListItem key={subp.id} value={subp} quantity={quantity} refreshFunction={refreshProduct} />
+        }
         );
         return items
     }
 
     function renderFilteredSubproducts() {
-        const items = stock.subproducts.map(subp =>
-            <MenuItem value={subp.url}>{subp.name} </MenuItem>
+        const items = stock.notUsedSubproducts.map(subp =>
+            <MenuItem key={subp.id} value={subp.url}>{subp.name} </MenuItem>
         );
         return items
     }
 
-    function handleAddSubproduct(event) {
+    function handleAddSubproduct() {
         createComposition(form);
         refreshProduct();
         setOpen(false);
     }
 
     function updateForm(event) {
-        setForm({ ...form, [event.target.name]: event.target.value });
+        setForm({...form, [event.target.name]: event.target.value});
     }
 
     return (
@@ -105,33 +115,24 @@ function DetailExtra(props) {
                     </FormControl>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleAddSubproduct} color="primary">
-                        Add
-                    </Button>
+                    <Button onClick={handleAddSubproduct} color="primary"> Add </Button>
                 </DialogActions>
             </Dialog>
-
         </div >
     )
 }
 
 function SubProductListItem(props) {
-    const [subproduct, setSubproduct] = useState('');
-    const comp = props.composition;
+    const subprod = props.value;
+    const quantity = props.quantity;
     const refreshProduct = props.refreshFunction;
 
-    useEffect(() => {
-        axios.get(comp.subproduct).then(response =>
-            setSubproduct(response.data)
-        )
-    }, [comp.subproduct])
-
     function handleDelete() {
-        deleteComposition(comp.id).then(() => refreshProduct());
+        deleteComposition(subprod.id).then(() => refreshProduct());
     }
 
     return (
-        <ListItem key={comp.id} >{`${subproduct.name}: ${comp.quantity}`}
+        <ListItem>{`${subprod.name}: ${quantity}`}
             <IconButton edge='end' onClick={handleDelete}>
                 <HighlightOffIcon fontSize='small' />
             </IconButton>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRouteMatch, Link } from 'react-router-dom'
+import {useRouteMatch, Link} from 'react-router-dom'
 
 import TableContainer from '@material-ui/core/TableContainer';
 import Table from '@material-ui/core/Table';
@@ -15,9 +15,10 @@ import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 
 import './ProductTable.css'
+// import {CircularProgress} from '@material-ui/core';
 
 function ProductTableScreen(props) {
-    let { url } = useRouteMatch();
+    let {url} = useRouteMatch();
 
     return (
         <Container maxWidth='md'>
@@ -41,12 +42,11 @@ function ProductTableScreen(props) {
 
                             <TableFooter>
                                 <TableRow>
-                                    <TableCell size='small' variant='body'>
-                                        Total: {props.rows ?
-                                            props.rows.length : 'Couldn\'t find any products'}
-                                    </TableCell>
-                                    <TableCell></TableCell>
-                                    <TableCell></TableCell>
+                                    {/* {props.loading ? */}
+                                    {/*     <CircularProgress /> : */}
+                                    {/*     <TableCell size='small' variant='body'> */}
+                                    {/*         Total: {props.rows ? props.rows.length : 'Couldn\'t find any products'} */}
+                                    {/*     </TableCell>} */}
                                 </TableRow>
                             </TableFooter>
 

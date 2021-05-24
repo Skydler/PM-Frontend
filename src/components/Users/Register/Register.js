@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -9,40 +9,34 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
-import { Link as RouterLink } from 'react-router-dom'
-import axios from 'axios';
+import {Link as RouterLink} from 'react-router-dom'
+import {registerUser} from 'services/currentUser'
 import 'shared/css/authentication.css'
 
 function Register(props) {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [usernameError, setUsernameError] = useState('');
-    const [passwordError, setPasswordError] = useState('');
-
-    const baseUrl = process.env.REACT_APP_SERVER_ADDRESS + 'auth/'
+    const [form, setForm] = useState({
+        username: '',
+        password: '',
+    })
+    const [errAlerts, setErrAlerts] = useState({
+        username: '',
+        password: '',
+    })
 
     function postRegister(e) {
         e.preventDefault();
-
-        const body = {
-            username: username,
-            password: password,
-        };
-
-        axios.post(`${baseUrl}users/`, body)
-            .then(response => {
-                if (response.status === 201) {
-                    props.history.push('/products');
-                }
+        registerUser(form)
+            .then(() => {
+                props.history.push('/login');
             })
             .catch(e => {
-                console.log(e.response);
-                if (e.response) {
-                    const { data } = e.response
-                    setUsernameError(data.username);
-                    setPasswordError(data.password);
-                }
+                const {data} = e.response
+                setErrAlerts(data)
             })
+    }
+
+    function updateForm(event) {
+        setForm({...form, [event.target.name]: event.target.value})
     }
 
     return (
@@ -65,10 +59,10 @@ function Register(props) {
                         name="username"
                         autoComplete="username"
                         autoFocus
-                        error={Boolean(usernameError)}
-                        value={username}
-                        helperText={usernameError ? usernameError : 'Letters, digits and @/./+/-/_ only.'}
-                        onChange={(e) => (setUsername(e.target.value))}
+                        error={Boolean(errAlerts.username)}
+                        value={form.username}
+                        helperText={errAlerts.username || 'Letters, digits and @/./+/-/_ only.'}
+                        onChange={updateForm}
                     />
                     <TextField
                         variant="outlined"
@@ -80,10 +74,10 @@ function Register(props) {
                         type="password"
                         id="password"
                         autoComplete="current-password"
-                        error={Boolean(passwordError)}
-                        value={password}
-                        helperText={passwordError ? passwordError : 'It must contain at least 8 characters'}
-                        onChange={(e) => (setPassword(e.target.value))}
+                        error={Boolean(errAlerts.password)}
+                        value={form.password}
+                        helperText={errAlerts.password || 'It must contain at least 8 characters'}
+                        onChange={updateForm}
                     />
                     <Button
                         type="submit"

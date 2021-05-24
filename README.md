@@ -9,3 +9,5 @@ App designed to manage products, started to help a friend and developed to learn
 - Gh-Pages plugin to deploy with Router
 - Axios
 - Material-UI
+
+It's hosted on https://skydler.github.io/PM-Frontend

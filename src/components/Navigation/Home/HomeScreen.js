@@ -1,8 +1,8 @@
 import React from 'react'
-import { Link, useRouteMatch } from 'react-router-dom'
+import {Link, useRouteMatch} from 'react-router-dom'
 
-function HomeScreen(props) {
-    const { path } = useRouteMatch()
+function HomeScreen() {
+    const {path} = useRouteMatch()
 
     return (
         <div>

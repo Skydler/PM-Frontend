@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react'
-import { useParams, useHistory } from 'react-router-dom';
-import { getSubProductWithId, deleteSubproduct } from 'services/products'
+import React, {useState, useEffect} from 'react'
+import {useParams, useHistory} from 'react-router-dom';
+import {getSubProductWithId, deleteSubproduct} from 'services/products'
 import NotFound from 'components/Maintenance/NotFound'
 import ProductDetailScreen from '../Screens/ProductDetail/ProductDetailScreen'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-function SubproductDetail(props) {
+function SubproductDetail() {
     const [product, setProduct] = useState();
     const [error, setError] = useState(false);
 
-    let { productID } = useParams();
+    let {productID} = useParams();
     const history = useHistory();
 
     useEffect(() => {
@@ -25,12 +26,14 @@ function SubproductDetail(props) {
     }
 
     function handleDelete(id) {
-        deleteSubproduct(id).then(response => {
+        deleteSubproduct(id).then(() => {
             history.push("/home/subproducts")
         })
     }
 
-    return !product ? 'Loading...' :
+    return !product ?
+        (<CircularProgress />)
+        :
         (<ProductDetailScreen
             product={product}
             deleteFunction={handleDelete}

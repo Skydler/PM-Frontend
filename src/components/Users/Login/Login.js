@@ -12,42 +12,30 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-import { Redirect, Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { useAuth } from 'helpers/context';
-import axios from 'axios';
+import { loginUser } from 'services/currentUser'
 import 'shared/css/authentication.css'
 
 function Login(props) {
-    const [isLoggedIn, setLoggedIn] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [form, setForm] = useState({
+        username: '',
+        password: '',
+    })
     const [remember, setRemember] = useState(false);
+    const [isError, setIsError] = useState(false);
 
-    const { authTokens, setAuthTokens } = useAuth();
-    // I use "authTokens" to check if the user has already logged in before,
-    // on the other hand I need to store authTokens in state to prevent an error I don't fully understand.
-    // Error ocurrs when authenticating. Warning: Can’t perform a React state update on an unmounted component
-    const [hasToken] = useState(authTokens);
-
-
-    const baseUrl = process.env.REACT_APP_SERVER_ADDRESS + 'auth/'
+    const history = useHistory();
+    const locationState = props.location.state;
+    const referer = locationState ? locationState.referer : '/home';
+    const { setAuthTokens } = useAuth();
 
     function postLogin(event) {
         event.preventDefault();
-        const body = {
-            username: username,
-            password: password,
-        };
-
-        axios.post(`${baseUrl}jwt/create/`, body)
-            .then((response) => {
-                if (response.status === 200) {
-                    setAuthTokens(response.data, remember);
-                    setLoggedIn(true);
-                } else {
-                    setIsError(true);
-                }
+        loginUser(form)
+            .then(tokens => {
+                setAuthTokens(tokens, remember);
+                history.push(referer);
             })
             .catch(error => {
                 setIsError(true);
@@ -55,11 +43,8 @@ function Login(props) {
             });
     }
 
-    const locationState = props.location.state;
-    const referer = locationState ? locationState.referer : '/home';
-
-    if (isLoggedIn || hasToken) {
-        return <Redirect to={referer} />
+    function updateForm(event) {
+        setForm({ ...form, [event.target.name]: event.target.value })
     }
 
     return (
@@ -83,8 +68,8 @@ function Login(props) {
                         autoComplete="username"
                         autoFocus
                         error={isError}
-                        value={username}
-                        onChange={(e) => (setUsername(e.target.value))}
+                        value={form.username}
+                        onChange={updateForm}
                     />
                     <TextField
                         variant="outlined"
@@ -97,8 +82,8 @@ function Login(props) {
                         id="password"
                         autoComplete="current-password"
                         error={isError}
-                        value={password}
-                        onChange={(e) => (setPassword(e.target.value))}
+                        value={form.password}
+                        onChange={updateForm}
                     />
                     {
                         isError &&

@@ -1,21 +1,32 @@
-import React from 'react'
-import { Switch, Route, useRouteMatch } from 'react-router-dom'
+import React, {useEffect, useState} from 'react'
+import {Switch, Route, useRouteMatch} from 'react-router-dom'
 import ProductList from 'components/Stock/Product'
 import SubProductList from 'components/Stock/Subproduct'
 import HomeScreen from './HomeScreen'
 import TopBar from 'components/Navigation/TopBar'
+import {getUser} from 'services/currentUser'
+import {UserContext} from 'hooks/userContext'
 
-function Home(props) {
-    const { path } = useRouteMatch()
+function Home() {
+    const [user, setUser] = useState();
+    const {path} = useRouteMatch()
+
+    useEffect(() => {
+        getUser().then(user => {
+            setUser(user);
+        });
+    }, [])
 
     return (
         <div>
-            <TopBar></TopBar>
-            <Switch>
-                <Route exact path={path} component={HomeScreen} />
-                <Route path={`${path}/products`} component={ProductList} />
-                <Route path={`${path}/subproducts`} component={SubProductList} />
-            </Switch>
+            <UserContext.Provider value={user}>
+                <TopBar></TopBar>
+                <Switch>
+                    <Route exact path={path} component={HomeScreen} />
+                    <Route path={`${path}/products`} component={ProductList} />
+                    <Route path={`${path}/subproducts`} component={SubProductList} />
+                </Switch>
+            </UserContext.Provider>
         </div>
     )
 }
