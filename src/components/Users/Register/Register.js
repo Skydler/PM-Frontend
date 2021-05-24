@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -9,8 +9,8 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
-import { Link as RouterLink } from 'react-router-dom'
-import { registerUser } from 'services/currentUser'
+import {Link as RouterLink} from 'react-router-dom'
+import {registerUser} from 'services/currentUser'
 import 'shared/css/authentication.css'
 
 function Register(props) {
@@ -26,17 +26,17 @@ function Register(props) {
     function postRegister(e) {
         e.preventDefault();
         registerUser(form)
-            .then(response => {
+            .then(() => {
                 props.history.push('/login');
             })
             .catch(e => {
-                const { data } = e.response
+                const {data} = e.response
                 setErrAlerts(data)
             })
     }
 
     function updateForm(event) {
-        setForm({ ...form, [event.target.name]: event.target.value })
+        setForm({...form, [event.target.name]: event.target.value})
     }
 
     return (

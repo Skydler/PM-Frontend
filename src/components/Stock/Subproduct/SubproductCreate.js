@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 
-import { TextField } from '@material-ui/core'
+import {TextField} from '@material-ui/core'
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 
-import { createSubproduct } from 'services/products'
-import { useHistory } from 'react-router-dom';
+import {createSubproduct} from 'services/products'
+import {useHistory} from 'react-router-dom';
 
-function SubproductCreate(props) {
+function SubproductCreate() {
     const [form, setForm] = useState({
         name: '',
         description: '',
@@ -19,7 +19,7 @@ function SubproductCreate(props) {
 
     function postSubproduct(event) {
         event.preventDefault();
-        createSubproduct(form).then(response => {
+        createSubproduct(form).then(() => {
             history.push("/home/subproducts")
         }).catch(error => {
             setIsError(true);
@@ -28,7 +28,7 @@ function SubproductCreate(props) {
     }
 
     function updateForm(event) {
-        setForm({ ...form, [event.target.name]: event.target.value })
+        setForm({...form, [event.target.name]: event.target.value})
     }
 
     return (

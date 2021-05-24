@@ -115,9 +115,7 @@ function DetailExtra(props) {
                     </FormControl>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleAddSubproduct} color="primary">
-                        Add
-                    </Button>
+                    <Button onClick={handleAddSubproduct} color="primary"> Add </Button>
                 </DialogActions>
             </Dialog>
         </div >

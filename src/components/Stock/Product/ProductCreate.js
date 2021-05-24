@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 
 import { createProduct } from 'services/products'
 
-function ProductCreate(props) {
+function ProductCreate() {
     const [form, setForm] = useState({
         name: '',
         description: '',
