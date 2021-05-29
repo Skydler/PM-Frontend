@@ -25,7 +25,7 @@ function ProductDetail() {
 
     function handleDelete(id) {
         deleteProduct(id).then(() => {
-            history.push("/home/products")
+            history.push("/products")
         })
     }
 
@@ -38,14 +38,14 @@ function ProductDetail() {
     }
 
     return !product ?
-        (<CircularProgress />)
+        <CircularProgress />
         :
-        (<ProductDetailScreen
+        <ProductDetailScreen
             product={product}
             deleteFunction={handleDelete}
             refreshFunction={refreshProduct}
             extraDetail={DetailExtra}
-        />)
+        />
 }
 
 export default ProductDetail

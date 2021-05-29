@@ -1,20 +1,13 @@
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import FormControl from '@material-ui/core/FormControl';
-import IconButton from '@material-ui/core/IconButton';
-import Input from '@material-ui/core/Input';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import React, {useEffect, useState, useContext} from 'react';
+import {
+    Button, Dialog, DialogActions,
+    DialogContent, DialogTitle, FormControl,
+    IconButton, Input, List, ListItem,
+    ListSubheader, MenuItem, Select
+} from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
-import React, {useEffect, useState, useContext} from 'react';
 import {getSubproducts} from 'services/currentUser';
 import {createComposition, deleteComposition, getCompositionsOfProduct} from 'services/products';
 import {UserContext} from 'hooks/userContext';
@@ -30,8 +23,8 @@ function DetailExtra(props) {
         notUsedSubproducts: [],
     });
     const [form, setForm] = useState({
-        subproduct: '',
         product: product.url,
+        subproduct: '',
         quantity: '',
     });
     const [open, setOpen] = useState(false);
@@ -43,7 +36,6 @@ function DetailExtra(props) {
         getCompositionsOfProduct(product).then(compositions => {
             getSubproducts(user).then(totalSubproducts => {
                 const CompSubproductUrls = compositions.map(comp => comp.subproduct);
-
                 const notUsedSubproducts = totalSubproducts.filter(subp => !CompSubproductUrls.includes(subp.url));
                 const usedSubproducts = totalSubproducts.filter(subp => CompSubproductUrls.includes(subp.url));
                 setStock({
@@ -57,10 +49,9 @@ function DetailExtra(props) {
 
     function renderIngredients() {
         const items = stock.usedSubproducts.map(subp => {
-            const quantity = stock.compositions.filter(comp => comp.subproduct === subp.url)[0].quantity;
-            return <SubProductListItem key={subp.id} value={subp} quantity={quantity} refreshFunction={refreshProduct} />
-        }
-        );
+            const prodComposition = stock.compositions.filter(comp => comp.subproduct === subp.url)[0];
+            return <SubProductListItem key={subp.id} value={subp} composition={prodComposition} refreshFunction={refreshProduct} />
+        });
         return items
     }
 
@@ -73,8 +64,8 @@ function DetailExtra(props) {
 
     function handleAddSubproduct() {
         createComposition(form);
-        refreshProduct();
         setOpen(false);
+        refreshProduct();
     }
 
     function updateForm(event) {
@@ -124,15 +115,15 @@ function DetailExtra(props) {
 
 function SubProductListItem(props) {
     const subprod = props.value;
-    const quantity = props.quantity;
+    const comp = props.composition;
     const refreshProduct = props.refreshFunction;
 
     function handleDelete() {
-        deleteComposition(subprod.id).then(() => refreshProduct());
+        deleteComposition(comp.id).then(() => refreshProduct());
     }
 
     return (
-        <ListItem>{`${subprod.name}: ${quantity}`}
+        <ListItem>{`${subprod.name}: ${comp.quantity}`}
             <IconButton edge='end' onClick={handleDelete}>
                 <HighlightOffIcon fontSize='small' />
             </IconButton>

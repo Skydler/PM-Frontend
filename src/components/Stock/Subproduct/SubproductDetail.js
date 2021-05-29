@@ -6,7 +6,7 @@ import ProductDetailScreen from '../Screens/ProductDetail/ProductDetailScreen'
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 function SubproductDetail() {
-    const [product, setProduct] = useState();
+    const [subproduct, setSubProduct] = useState();
     const [error, setError] = useState(false);
 
     let {productID} = useParams();
@@ -14,7 +14,7 @@ function SubproductDetail() {
 
     useEffect(() => {
         getSubProductWithId(productID)
-            .then(response => setProduct(response.data))
+            .then(response => setSubProduct(response.data))
             .catch(error => {
                 setError(true);
                 throw error;
@@ -27,17 +27,17 @@ function SubproductDetail() {
 
     function handleDelete(id) {
         deleteSubproduct(id).then(() => {
-            history.push("/home/subproducts")
+            history.push("/subproducts")
         })
     }
 
-    return !product ?
-        (<CircularProgress />)
+    return !subproduct ?
+        <CircularProgress />
         :
-        (<ProductDetailScreen
-            product={product}
+        <ProductDetailScreen
+            product={subproduct}
             deleteFunction={handleDelete}
-        />)
+        />
 }
 
 export default SubproductDetail

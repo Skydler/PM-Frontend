@@ -12,10 +12,10 @@ function ProductDetailScreen(props) {
     const refreshFunction = props.refreshFunction;
 
     return (
-        <Container maxWidth='md' id='container'>
+        <Container maxWidth='md' className='container'>
             <DetailHeading product={product} deleteFunction={deleteFunction} />
             <DetailBody product={product} />
-            {ExtraDetail && <ExtraDetail product={product}  refreshFunction={refreshFunction}/>}
+            {ExtraDetail && <ExtraDetail product={product} refreshFunction={refreshFunction} />}
         </Container>
     )
 }

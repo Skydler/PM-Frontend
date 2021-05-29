@@ -16,12 +16,12 @@ function ProductList() {
     const user = useContext(UserContext);
 
     useEffect(() => {
-        // pathname must be /home/products because this function is executed
-        // from inside a product detail (cause of route below)
+        // pathname must be /products because this function is executed
+        // from inside a product detail (cause of the route below)
         //
-        // user mustn't be undefined to prevent from repeating querys
+        // user must not be undefined to prevent from repeating querys
         // to get the current user
-        if (location.pathname === '/home/products' && user !== undefined) {
+        if (location.pathname === '/products' && user !== undefined) {
             getProducts(user).then(products => {
                 const prod_rows = products.map(prod =>
                     <ProductRow key={prod.id} product={prod} />

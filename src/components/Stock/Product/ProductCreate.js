@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 
-import { TextField } from '@material-ui/core'
+import {TextField} from '@material-ui/core'
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-import { useHistory } from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 
-import { createProduct } from 'services/products'
+import {createProduct} from 'services/products'
 
 function ProductCreate() {
     const [form, setForm] = useState({
@@ -20,7 +20,7 @@ function ProductCreate() {
     function postProduct(event) {
         event.preventDefault();
         createProduct(form).then(() => {
-            history.push("/home/products")
+            history.push("/products")
         }).catch(error => {
             setIsError(true);
             throw error;
@@ -28,7 +28,7 @@ function ProductCreate() {
     }
 
     function updateForm(event) {
-        setForm({ ...form, [event.target.name]: event.target.value })
+        setForm({...form, [event.target.name]: event.target.value})
     }
 
     return (

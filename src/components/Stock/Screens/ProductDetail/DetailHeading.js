@@ -10,7 +10,7 @@ function DetailHeading(props) {
     const deleteFunction = props.deleteFunction
 
     return (
-        <div id='heading-container'>
+        <div className='heading-container'>
             <div className='text-heading'>
                 <h1 className='product-title'>{product.name}</h1>
                 <p className='product-description'>{product.description}</p>

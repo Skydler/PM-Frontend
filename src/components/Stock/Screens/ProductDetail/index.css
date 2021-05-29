@@ -1,13 +1,13 @@
 /* General */
 
-#container {
+.container {
     background-color: rgb(192, 213, 228);
     margin-top: 4em;
     padding-bottom: 10em;
     height: 100%;
 }
 
-#heading-container {
+.heading-container {
     padding: 3rem;
     display: flex;
     flex-direction: row;

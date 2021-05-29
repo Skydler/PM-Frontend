@@ -20,7 +20,7 @@ function SubproductCreate() {
     function postSubproduct(event) {
         event.preventDefault();
         createSubproduct(form).then(() => {
-            history.push("/home/subproducts")
+            history.push("/subproducts")
         }).catch(error => {
             setIsError(true);
             throw error;

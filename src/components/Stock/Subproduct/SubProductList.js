@@ -17,12 +17,12 @@ function SubproductList() {
     const user = useContext(UserContext);
 
     useEffect(() => {
-        // pathname must be /home/products because this function is executed
+        // pathname must be /products because this function is executed
         // from inside a product detail (cause of route below)
         //
         // user mustn't be undefined to prevent from repeating querys
         // to get the current user
-        if (location.pathname === '/home/subproducts' && user !== undefined) {
+        if (location.pathname === '/subproducts' && user !== undefined) {
             getSubproducts(user).then(subproducts => {
                 const prod_rows = subproducts.map(prod =>
                     <ProductRow key={prod.id} product={prod} />

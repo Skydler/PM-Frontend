@@ -1,21 +1,12 @@
 import React from 'react'
 import {useRouteMatch, Link} from 'react-router-dom'
-
-import TableContainer from '@material-ui/core/TableContainer';
-import Table from '@material-ui/core/Table';
-
-import TableHead from '@material-ui/core/TableHead';
-import TableBody from '@material-ui/core/TableBody';
-import TableFooter from '@material-ui/core/TableFooter';
-
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
-
-import Container from '@material-ui/core/Container';
-import Paper from '@material-ui/core/Paper';
-
+import {
+    TableContainer, Table, TableHead,
+    TableBody, TableFooter, TableRow,
+    TableCell, Container, Paper, Button,
+    CircularProgress,
+} from '@material-ui/core';
 import './ProductTable.css'
-// import {CircularProgress} from '@material-ui/core';
 
 function ProductTableScreen(props) {
     let {url} = useRouteMatch();
@@ -26,6 +17,7 @@ function ProductTableScreen(props) {
                 <h1 className='central-title'>{props.title}</h1>
                 <Paper elevation={3}>
                     <TableContainer id='table'>
+
                         <Table>
 
                             <TableHead>
@@ -37,16 +29,26 @@ function ProductTableScreen(props) {
                             </TableHead>
 
                             <TableBody>
-                                {props.rows}
+                                {props.loading ?
+                                    <TableRow>
+                                        <TableCell align='center'></TableCell>
+                                        <TableCell align='center'>
+                                            <CircularProgress />
+                                        </TableCell>
+                                        <TableCell align='center'></TableCell>
+                                    </TableRow>
+
+                                    : props.rows
+                                }
                             </TableBody>
 
                             <TableFooter>
                                 <TableRow>
-                                    {/* {props.loading ? */}
-                                    {/*     <CircularProgress /> : */}
-                                    {/*     <TableCell size='small' variant='body'> */}
-                                    {/*         Total: {props.rows ? props.rows.length : 'Couldn\'t find any products'} */}
-                                    {/*     </TableCell>} */}
+                                    <TableCell size='small' variant='footer'>
+                                        Total: {props.rows ? props.rows.length : 'Couldn\'t find any products'}
+                                    </TableCell>
+                                    <TableCell align='center'></TableCell>
+                                    <TableCell align='center'></TableCell>
                                 </TableRow>
                             </TableFooter>
 
@@ -54,7 +56,11 @@ function ProductTableScreen(props) {
                     </TableContainer>
                 </Paper>
                 <div>
-                    <Link to={`${url}/create`}>Create new</Link>
+                    <Button color="primary"
+                        variant="contained"
+                        component={Link} to={`${url}/create`} >
+                        Create new
+                    </Button>
                 </div>
             </div>
         </Container>
