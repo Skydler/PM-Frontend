@@ -5,8 +5,8 @@ import {getSubproducts} from 'services/currentUser'
 
 import SubproductDetail from './SubproductDetail';
 import SubproductCreate from './SubproductCreate';
-import ProductTableScreen from '../Screens/ProductTable/ProductTable'
-import ProductRow from '../Screens/ProductTable/ProductRow'
+import ProductTableScreen from './Screens/SubProductTableScreen/ProductTableScreen'
+import ProductRow from './Screens/SubProductTableScreen/ProductRow'
 import {UserContext} from 'hooks/userContext'
 
 

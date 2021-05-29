@@ -1,11 +1,11 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {Route, Switch, useLocation, useRouteMatch} from 'react-router-dom';
-import {getProducts} from 'services/currentUser';
-import ProductRow from '../Screens/ProductTable/ProductRow';
-import ProductTableScreen from '../Screens/ProductTable/ProductTable';
+import ProductRow from './Screens/ProductTableScreen/ProductRow';
+import ProductTableScreen from './Screens/ProductTableScreen/ProductTableScreen';
 import ProductCreate from './ProductCreate';
 import ProductDetail from './ProductDetail';
 import {UserContext} from 'hooks/userContext'
+import {getProducts} from 'services/currentUser';
 
 
 function ProductList() {

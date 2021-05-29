@@ -3,8 +3,7 @@ import NotFound from 'components/Maintenance/NotFound';
 import React, {useEffect, useState} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
 import {deleteProduct, getProductWithId} from 'services/products';
-import ProductDetailScreen from '../Screens/ProductDetail/ProductDetailScreen';
-import DetailExtra from './DetailExtra';
+import ProductDetailScreen from './Screens/ProductDetailScreen/ProductDetailScreen';
 
 
 function ProductDetail() {
@@ -44,7 +43,6 @@ function ProductDetail() {
             product={product}
             deleteFunction={handleDelete}
             refreshFunction={refreshProduct}
-            extraDetail={DetailExtra}
         />
 }
 

@@ -11,7 +11,7 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import {getSubproducts} from 'services/currentUser';
 import {createComposition, deleteComposition, getCompositionsOfProduct} from 'services/products';
 import {UserContext} from 'hooks/userContext';
-import './DetailExtra.css';
+import './index.css';
 
 
 function DetailExtra(props) {

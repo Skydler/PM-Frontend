@@ -37,3 +37,10 @@
     text-align: center;
     color: #4e5155 !important;
 }
+
+/* Detail Extra */
+
+.dialog-content {
+    display: flex;
+    flex-wrap: wrap;
+}

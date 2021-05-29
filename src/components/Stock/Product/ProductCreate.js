@@ -1,11 +1,9 @@
 import React, {useState} from 'react'
 
-import {TextField} from '@material-ui/core'
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
 import {useHistory} from 'react-router-dom';
 
 import {createProduct} from 'services/products'
+import ProductCreateScreen from "./Screens/ProductCreateScreen"
 
 function ProductCreate() {
     const [form, setForm] = useState({
@@ -31,48 +29,10 @@ function ProductCreate() {
         setForm({...form, [event.target.name]: event.target.value})
     }
 
-    return (
-        <Container maxWidth='md'>
-            <div>
-                <form>
-                    <TextField
-                        required
-                        error={isError}
-                        label='Name: '
-                        name='name'
-                        value={form.name}
-                        onChange={updateForm}
-                    />
-                    <TextField
-                        required
-                        error={isError}
-                        label='Description: '
-                        name='description'
-                        value={form.description}
-                        onChange={updateForm}
-                    />
-                    <TextField
-                        required
-                        error={isError}
-                        label='Amount: '
-                        name='current_amount'
-                        value={form.amount}
-                        onChange={updateForm}
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className='submit'
-                        onClick={postProduct}
-                    >
-                        Create
-                  </Button>
-                </form >
-            </div>
-        </Container>
-    )
+    return <ProductCreateScreen isError={isError}
+        form={form}
+        postProduct={postProduct}
+        updateForm={updateForm} />
 }
 
 export default ProductCreate

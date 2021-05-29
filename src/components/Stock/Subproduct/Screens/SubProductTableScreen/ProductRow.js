@@ -1,11 +1,9 @@
 import React from 'react'
 
-// import Link from '@material-ui/core/Link';
-
 import {Link as RouterLink, useRouteMatch} from 'react-router-dom'
 import {TableRow, TableCell, Button} from '@material-ui/core';
 
-import './ProductRow.css'
+import './index.css'
 
 
 function ProductRow(props) {
@@ -27,7 +25,7 @@ function ProductRow(props) {
                 {product.current_amount}
             </TableCell>
             <TableCell align='right'>
-                {product.cost}
+                {product.price}
             </TableCell>
         </TableRow>
     )

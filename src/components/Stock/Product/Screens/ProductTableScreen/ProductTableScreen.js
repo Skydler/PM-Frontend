@@ -6,7 +6,7 @@ import {
     TableCell, Container, Paper, Button,
     CircularProgress,
 } from '@material-ui/core';
-import './ProductTable.css'
+import './index.css'
 
 function ProductTableScreen(props) {
     let {url} = useRouteMatch();

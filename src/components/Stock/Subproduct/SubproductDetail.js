@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {useParams, useHistory} from 'react-router-dom';
 import {getSubProductWithId, deleteSubproduct} from 'services/products'
 import NotFound from 'components/Maintenance/NotFound'
-import ProductDetailScreen from '../Screens/ProductDetail/ProductDetailScreen'
+import ProductDetailScreen from './Screens/SubProductDetailScreen/SubProductDetailScreen'
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 function SubproductDetail() {

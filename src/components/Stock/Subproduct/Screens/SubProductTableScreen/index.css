@@ -1,0 +1,27 @@
+#table {
+    margin-bottom: 3rem;
+}
+
+.central-title {
+    text-align: center;
+}
+
+.pink-cell {
+    background-color: #DCB8CB;
+}
+
+td, tfoot {
+    background-color: #D5C9DF;
+}
+
+td {
+    border-bottom: 1px solid #f1dbf1 !important;
+}
+
+tfoot>tr>td {
+    border-bottom: none !important;
+}
+
+th {
+    background-color: tomato;
+}
