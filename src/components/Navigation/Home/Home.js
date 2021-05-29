@@ -23,8 +23,8 @@ function Home() {
                 <TopBar></TopBar>
                 <Switch>
                     <Route exact path={path} component={HomeScreen} />
-                    <Route path={`${path}/products`} component={ProductList} />
-                    <Route path={`${path}/subproducts`} component={SubProductList} />
+                    <Route path={`${path}products`} component={ProductList} />
+                    <Route path={`${path}subproducts`} component={SubProductList} />
                 </Switch>
             </UserContext.Provider>
         </div>

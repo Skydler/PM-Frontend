@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -12,9 +12,9 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-import { Link as RouterLink, useHistory } from 'react-router-dom';
-import { useAuth } from 'helpers/context';
-import { loginUser } from 'services/currentUser'
+import {Link as RouterLink, useHistory} from 'react-router-dom';
+import {useAuth} from 'helpers/context';
+import {loginUser} from 'services/currentUser'
 import 'shared/css/authentication.css'
 
 function Login(props) {
@@ -27,8 +27,8 @@ function Login(props) {
 
     const history = useHistory();
     const locationState = props.location.state;
-    const referer = locationState ? locationState.referer : '/home';
-    const { setAuthTokens } = useAuth();
+    const referer = locationState ? locationState.referer : '/';
+    const {setAuthTokens} = useAuth();
 
     function postLogin(event) {
         event.preventDefault();
@@ -44,7 +44,7 @@ function Login(props) {
     }
 
     function updateForm(event) {
-        setForm({ ...form, [event.target.name]: event.target.value })
+        setForm({...form, [event.target.name]: event.target.value})
     }
 
     return (
