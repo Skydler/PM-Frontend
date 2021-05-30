@@ -23,6 +23,12 @@ function HomeScreen() {
                     component={Link} to={`${path}subproducts`} >
                     Go to subproducts
                 </Button>
+
+                <Button color="primary"
+                    variant="contained"
+                    component={Link} to={`${path}packaging`} >
+                    Go to packaging
+                </Button>
             </div>
         </Container>
     )
