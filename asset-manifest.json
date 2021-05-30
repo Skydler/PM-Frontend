@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/PM-Frontend/static/css/main.963ebd77.chunk.css",
-    "main.js": "/PM-Frontend/static/js/main.72cf9ef1.chunk.js",
-    "main.js.map": "/PM-Frontend/static/js/main.72cf9ef1.chunk.js.map",
+    "main.css": "/PM-Frontend/static/css/main.7a2f6343.chunk.css",
+    "main.js": "/PM-Frontend/static/js/main.184ed8b3.chunk.js",
+    "main.js.map": "/PM-Frontend/static/js/main.184ed8b3.chunk.js.map",
     "runtime-main.js": "/PM-Frontend/static/js/runtime-main.178e9df8.js",
     "runtime-main.js.map": "/PM-Frontend/static/js/runtime-main.178e9df8.js.map",
-    "static/js/2.900879bb.chunk.js": "/PM-Frontend/static/js/2.900879bb.chunk.js",
-    "static/js/2.900879bb.chunk.js.map": "/PM-Frontend/static/js/2.900879bb.chunk.js.map",
+    "static/js/2.6fdf9b8e.chunk.js": "/PM-Frontend/static/js/2.6fdf9b8e.chunk.js",
+    "static/js/2.6fdf9b8e.chunk.js.map": "/PM-Frontend/static/js/2.6fdf9b8e.chunk.js.map",
     "index.html": "/PM-Frontend/index.html",
-    "static/css/main.963ebd77.chunk.css.map": "/PM-Frontend/static/css/main.963ebd77.chunk.css.map",
-    "static/js/2.900879bb.chunk.js.LICENSE.txt": "/PM-Frontend/static/js/2.900879bb.chunk.js.LICENSE.txt"
+    "static/css/main.7a2f6343.chunk.css.map": "/PM-Frontend/static/css/main.7a2f6343.chunk.css.map",
+    "static/js/2.6fdf9b8e.chunk.js.LICENSE.txt": "/PM-Frontend/static/js/2.6fdf9b8e.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.178e9df8.js",
-    "static/js/2.900879bb.chunk.js",
-    "static/css/main.963ebd77.chunk.css",
-    "static/js/main.72cf9ef1.chunk.js"
+    "static/js/2.6fdf9b8e.chunk.js",
+    "static/css/main.7a2f6343.chunk.css",
+    "static/js/main.184ed8b3.chunk.js"
   ]
 }
