@@ -1,37 +1,16 @@
-import React, {useState} from 'react'
-
+import React from 'react'
 import {createSubproduct} from 'services/products'
-import {useHistory} from 'react-router-dom';
-import SubProductCreateScreen from "./Screens/SubProductCreateScreen"
+import ItemCreate from '../Common/ItemCreate'
 
 function SubproductCreate() {
-    const [form, setForm] = useState({
-        name: '',
-        description: '',
-        current_amount: '',
-        price: '',
-    });
-    const [isError, setIsError] = useState(false);
-    const history = useHistory();
-
-    function postSubproduct(event) {
-        event.preventDefault();
-        createSubproduct(form).then(() => {
-            history.push("/subproducts")
-        }).catch(error => {
-            setIsError(true);
-            throw error;
-        });
+    const extraFormFields = {
+        price: ''
     }
+    const pathname = '/subproducts'
 
-    function updateForm(event) {
-        setForm({...form, [event.target.name]: event.target.value})
-    }
-
-    return <SubProductCreateScreen isError={isError}
-        form={form}
-        postSubProduct={postSubproduct}
-        updateForm={updateForm} />
+    return <ItemCreate extraFormFields={extraFormFields}
+        createItem={createSubproduct}
+        pathname={pathname} />
 }
 
 export default SubproductCreate

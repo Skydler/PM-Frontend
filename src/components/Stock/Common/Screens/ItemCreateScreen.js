@@ -2,10 +2,10 @@ import React from 'react'
 import {TextField, Button, Container} from '@material-ui/core'
 
 
-function ProductCreateScreen(props) {
+function ItemCreateScreen(props) {
     const form = props.form;
     const isError = props.isError;
-    const postProduct = props.postProduct;
+    const postItem = props.postItem;
     const updateForm = props.updateForm;
 
     return (
@@ -36,13 +36,23 @@ function ProductCreateScreen(props) {
                         value={form.amount}
                         onChange={updateForm}
                     />
+                    {"price" in form &&
+                        <TextField
+                            required
+                            error={isError}
+                            label='Price: '
+                            name='price'
+                            value={form.price}
+                            onChange={updateForm}
+                        />
+                    }
                     <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
                         className='submit'
-                        onClick={postProduct}
+                        onClick={postItem}
                     >
                         Create
                   </Button>
@@ -52,4 +62,5 @@ function ProductCreateScreen(props) {
     )
 }
 
-export default ProductCreateScreen;
+export default ItemCreateScreen;
+

@@ -6,9 +6,9 @@ import {TableRow, TableCell, Button} from '@material-ui/core';
 import './index.css'
 
 
-function ProductRow(props) {
+function ItemRow(props) {
     let {url} = useRouteMatch()
-    const {product} = props
+    const {item} = props
 
     return (
         <TableRow>
@@ -16,19 +16,20 @@ function ProductRow(props) {
                 <Button
                     size="small"
                     component={RouterLink}
-                    to={`${url}/${product.id}`}
+                    to={`${url}/${item.id}`}
                 >
-                    {product.name}
+                    {item.name}
                 </Button >
             </TableCell>
             <TableCell align='right'>
-                {product.current_amount}
+                {item.current_amount}
             </TableCell>
             <TableCell align='right'>
-                {product.price}
+                {item.price || item.cost}
             </TableCell>
         </TableRow>
     )
 }
 
-export default ProductRow
+export default ItemRow
+

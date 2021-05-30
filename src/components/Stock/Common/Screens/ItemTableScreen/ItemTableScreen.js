@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import './index.css'
 
-function ProductTableScreen(props) {
+function ItemTableScreen(props) {
     let {url} = useRouteMatch();
 
     return (
@@ -45,7 +45,7 @@ function ProductTableScreen(props) {
                             <TableFooter>
                                 <TableRow>
                                     <TableCell size='small' variant='footer'>
-                                        Total: {props.rows ? props.rows.length : 'Couldn\'t find any products'}
+                                        Total: {props.rows ? props.rows.length : 'Couldn\'t find any items'}
                                     </TableCell>
                                     <TableCell align='center'></TableCell>
                                     <TableCell align='center'></TableCell>
@@ -67,4 +67,5 @@ function ProductTableScreen(props) {
     )
 }
 
-export default ProductTableScreen
+export default ItemTableScreen;
+

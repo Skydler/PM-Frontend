@@ -1,49 +1,15 @@
-import CircularProgress from '@material-ui/core/CircularProgress';
-import NotFound from 'components/Maintenance/NotFound';
-import React, {useEffect, useState} from 'react';
-import {useHistory, useParams} from 'react-router-dom';
+import React from 'react';
 import {deleteProduct, getProductWithId} from 'services/products';
-import ProductDetailScreen from './Screens/ProductDetailScreen/ProductDetailScreen';
-
+import ItemDetail from '../Common/ItemDetail'
+import DetailExtra from './DetailExtra'
 
 function ProductDetail() {
-    const [product, setProduct] = useState();
-    const [error, setError] = useState(false);
+    const pathname = "/products"
 
-    let {productID} = useParams();
-    const history = useHistory();
-
-    useEffect(() => {
-        getProductWithId(productID)
-            .then(response => setProduct(response.data))
-            .catch(error => {
-                setError(true);
-                throw error;
-            })
-    }, [productID])
-
-    function handleDelete(id) {
-        deleteProduct(id).then(() => {
-            history.push("/products")
-        })
-    }
-
-    function refreshProduct() {
-        getProductWithId(productID).then(response => setProduct(response.data));
-    }
-
-    if (error) {
-        return <NotFound reason="Couldn't find the product you searched for. Sorry :(" />
-    }
-
-    return !product ?
-        <CircularProgress />
-        :
-        <ProductDetailScreen
-            product={product}
-            deleteFunction={handleDelete}
-            refreshFunction={refreshProduct}
-        />
+    return <ItemDetail pathname={pathname}
+        getter={getProductWithId}
+        deletter={deleteProduct}
+        DetailExtra={DetailExtra} />
 }
 
 export default ProductDetail

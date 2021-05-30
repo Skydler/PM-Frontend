@@ -5,7 +5,7 @@ import GridProductProp from './GridProductProp'
 import './index.css'
 
 function DetailBody(props) {
-    const product = props.product
+    const item = props.item
 
     return (
         <div >
@@ -17,11 +17,11 @@ function DetailBody(props) {
             >
                 <GridProductProp
                     label='Current amount: '
-                    info={product.current_amount + ' Lts.'}
+                    info={item.current_amount + ' Lts.'}
                 />
                 <GridProductProp
                     label='Base production cost: '
-                    info={'$' + product.cost}
+                    info={'$' + item.price || item.cost}
                 />
             </Grid>
         </div >

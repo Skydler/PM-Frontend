@@ -11,11 +11,10 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import {getSubproducts} from 'services/currentUser';
 import {createComposition, deleteComposition, getCompositionsOfProduct} from 'services/products';
 import {UserContext} from 'hooks/userContext';
-import './index.css';
 
 
 function DetailExtra(props) {
-    const product = props.product;
+    const product = props.item;
     const refreshProduct = props.refreshFunction;
     const [stock, setStock] = useState({
         compositions: [],

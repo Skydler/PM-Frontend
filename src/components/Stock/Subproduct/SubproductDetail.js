@@ -1,43 +1,13 @@
-import React, {useState, useEffect} from 'react'
-import {useParams, useHistory} from 'react-router-dom';
+import React from 'react'
 import {getSubProductWithId, deleteSubproduct} from 'services/products'
-import NotFound from 'components/Maintenance/NotFound'
-import ProductDetailScreen from './Screens/SubProductDetailScreen/SubProductDetailScreen'
-import CircularProgress from '@material-ui/core/CircularProgress';
+import ItemDetail from '../Common/ItemDetail'
 
 function SubproductDetail() {
-    const [subproduct, setSubProduct] = useState();
-    const [error, setError] = useState(false);
+    const pathname = "/subproducts"
 
-    let {productID} = useParams();
-    const history = useHistory();
-
-    useEffect(() => {
-        getSubProductWithId(productID)
-            .then(response => setSubProduct(response.data))
-            .catch(error => {
-                setError(true);
-                throw error;
-            })
-    }, [productID])
-
-    if (error) {
-        return <NotFound reason="Couldn't find the subproduct you searched for. Sorry :(" />
-    }
-
-    function handleDelete(id) {
-        deleteSubproduct(id).then(() => {
-            history.push("/subproducts")
-        })
-    }
-
-    return !subproduct ?
-        <CircularProgress />
-        :
-        <ProductDetailScreen
-            product={subproduct}
-            deleteFunction={handleDelete}
-        />
+    return <ItemDetail pathname={pathname}
+        getter={getSubProductWithId}
+        deletter={deleteSubproduct} />
 }
 
 export default SubproductDetail
