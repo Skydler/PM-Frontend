@@ -21,7 +21,7 @@ function DetailBody(props) {
                 />
                 <GridProductProp
                     label='Base production cost: '
-                    info={'$' + item.price || item.cost}
+                    info={'$' + (item.price || item.cost)}
                 />
             </Grid>
         </div >

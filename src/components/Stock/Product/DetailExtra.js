@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Button, Dialog, DialogActions,
     DialogContent, DialogTitle, FormControl,
@@ -10,7 +10,6 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 import {getSubproducts} from 'services/currentUser';
 import {createComposition, deleteComposition, getCompositionsOfProduct} from 'services/products';
-import {UserContext} from 'hooks/userContext';
 
 
 function DetailExtra(props) {
@@ -27,13 +26,12 @@ function DetailExtra(props) {
         quantity: '',
     });
     const [open, setOpen] = useState(false);
-    const user = useContext(UserContext);
 
     useEffect(() => {
         // All of this filtering should be done by the backend
         // but for now let's leave it this way so I can get a simple prototype working
         getCompositionsOfProduct(product).then(compositions => {
-            getSubproducts(user).then(totalSubproducts => {
+            getSubproducts().then(totalSubproducts => {
                 const CompSubproductUrls = compositions.map(comp => comp.subproduct);
                 const notUsedSubproducts = totalSubproducts.filter(subp => !CompSubproductUrls.includes(subp.url));
                 const usedSubproducts = totalSubproducts.filter(subp => CompSubproductUrls.includes(subp.url));
@@ -44,7 +42,7 @@ function DetailExtra(props) {
                 });
             });
         })
-    }, [product, user])
+    }, [product])
 
     function renderIngredients() {
         const items = stock.usedSubproducts.map(subp => {
