@@ -1,131 +1,176 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from "react";
 import {
-    Button, Dialog, DialogActions,
-    DialogContent, DialogTitle, FormControl,
-    IconButton, Input, List, ListItem,
-    ListSubheader, MenuItem, Select
-} from '@material-ui/core';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+  Container,
+  IconButton,
+  List,
+  ListItem,
+  ListSubheader,
+} from "@material-ui/core";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
-import {getSubproducts} from 'services/currentUser';
-import {createComposition, deleteComposition, getCompositionsOfProduct} from 'services/products';
+import { getSubproducts, getPackagingObjects } from "services/currentUser";
+import {
+  deleteComposition,
+  getCompositionsOfProduct,
+  getMeasuresOfProduct,
+} from "services/products";
 
+import AddSubproductDialog from "./AddSubproductDialog";
+import AddMeasureDialog from "./AddMeasureDialog";
 
 function DetailExtra(props) {
-    const product = props.item;
-    const refreshProduct = props.refreshFunction;
-    const [stock, setStock] = useState({
-        compositions: [],
-        usedSubproducts: [],
-        notUsedSubproducts: [],
-    });
-    const [form, setForm] = useState({
-        product: product.url,
-        subproduct: '',
-        quantity: '',
-    });
-    const [open, setOpen] = useState(false);
+  const product = props.item;
+  const [openSubproduct, setOpenSubproduct] = useState(false);
+  const [openMeasure, setOpenMeasure] = useState(false);
+  const refreshProduct = props.refreshFunction;
+  const [stock, setStock] = useState({
+    compositions: [],
+    usedSubproducts: [],
+    notUsedSubproducts: [],
+    packagingObjects: [],
+    measures: [],
+  });
 
-    useEffect(() => {
-        // All of this filtering should be done by the backend
-        // but for now let's leave it this way so I can get a simple prototype working
-        getCompositionsOfProduct(product).then(compositions => {
-            getSubproducts().then(totalSubproducts => {
-                const CompSubproductUrls = compositions.map(comp => comp.subproduct);
-                const notUsedSubproducts = totalSubproducts.filter(subp => !CompSubproductUrls.includes(subp.url));
-                const usedSubproducts = totalSubproducts.filter(subp => CompSubproductUrls.includes(subp.url));
-                setStock({
-                    compositions: compositions,
-                    usedSubproducts: usedSubproducts,
-                    notUsedSubproducts: notUsedSubproducts,
-                });
-            });
-        })
-    }, [product])
-
-    function renderIngredients() {
-        const items = stock.usedSubproducts.map(subp => {
-            const prodComposition = stock.compositions.filter(comp => comp.subproduct === subp.url)[0];
-            return <SubProductListItem key={subp.id} value={subp} composition={prodComposition} refreshFunction={refreshProduct} />
-        });
-        return items
-    }
-
-    function renderFilteredSubproducts() {
-        const items = stock.notUsedSubproducts.map(subp =>
-            <MenuItem key={subp.id} value={subp.url}>{subp.name} </MenuItem>
+  useEffect(() => {
+    // All of this filtering should be done by the backend
+    // but for now let's leave it this way so I can get a simple prototype working
+    getCompositionsOfProduct(product).then((compositions) => {
+      getSubproducts().then((totalSubproducts) => {
+        const CompSubproductUrls = compositions.map((comp) => comp.subproduct);
+        const notUsedSubproducts = totalSubproducts.filter(
+          (subp) => !CompSubproductUrls.includes(subp.url)
         );
-        return items
-    }
+        const usedSubproducts = totalSubproducts.filter((subp) =>
+          CompSubproductUrls.includes(subp.url)
+        );
 
-    function handleAddSubproduct() {
-        createComposition(form);
-        setOpen(false);
-        refreshProduct();
-    }
+        getMeasuresOfProduct(product).then((measures) => {
+          getPackagingObjects().then((packaging) => {
+            setStock({
+              compositions: compositions,
+              usedSubproducts: usedSubproducts,
+              notUsedSubproducts: notUsedSubproducts,
+              packagingObjects: packaging,
+              measures: measures,
+            });
+          });
+        });
+      });
+    });
+  }, [product]);
 
-    function updateForm(event) {
-        setForm({...form, [event.target.name]: event.target.value});
-    }
+  function renderIngredients() {
+    const items = stock.usedSubproducts.map((subp) => {
+      const prodComposition = stock.compositions.filter(
+        (comp) => comp.subproduct === subp.url
+      )[0];
+      return (
+        <SubProductListItem
+          key={subp.id}
+          value={subp}
+          composition={prodComposition}
+          refreshFunction={refreshProduct}
+        />
+      );
+    });
+    return items;
+  }
 
-    return (
-        <div>
-            <List>
-                <ListItem>Makeable amount: {product.makeable_amount}</ListItem>
-            </List>
+  function renderMeasures() {
+    const items = stock.measures.map((measure) => {
+      return (
+        <MeasureListItem
+          key={measure.id}
+          value={measure}
+          refreshFunction={refreshProduct}
+        />
+      );
+    });
+    return items;
+  }
 
-            <List subheader={
-                <ListSubheader component="div">Ingredients:
-                    <IconButton edge='end' onClick={() => setOpen(true)}>
-                        <AddCircleOutlineIcon />
-                    </IconButton>
-                </ListSubheader>} >
-                {renderIngredients()}
-            </List>
-            <Dialog open={open} onClose={() => setOpen(false)}>
-                <DialogTitle>Add a new ingredient</DialogTitle>
-                <DialogContent >
-                    <FormControl>
-                        <Select
-                            name='subproduct'
-                            onChange={updateForm}>
-                            <MenuItem value="">
-                                <em>None</em>
-                            </MenuItem>
-                            {renderFilteredSubproducts()}
-                        </Select>
-                        <Input
-                            name="quantity"
-                            onChange={updateForm}
-                            placeholder="Quantity">
-                        </Input>
-                    </FormControl>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleAddSubproduct} color="primary"> Add </Button>
-                </DialogActions>
-            </Dialog>
-        </div >
-    )
+  return (
+    <Container>
+      <p>Makeable amount: {product.makeable_amount}</p>
+
+      <List
+        subheader={
+          <ListSubheader component="div">
+            Ingredients:
+            <IconButton edge="end" onClick={() => setOpenSubproduct(true)}>
+              <AddCircleOutlineIcon />
+            </IconButton>
+          </ListSubheader>
+        }
+      >
+        {renderIngredients()}
+      </List>
+      <List
+        subheader={
+          <ListSubheader component="div">
+            Measures:
+            <IconButton edge="end" onClick={() => setOpenMeasure(true)}>
+              <AddCircleOutlineIcon />
+            </IconButton>
+          </ListSubheader>
+        }
+      >
+        {renderMeasures()}
+      </List>
+      <AddSubproductDialog
+        items={stock.notUsedSubproducts}
+        refreshProduct={refreshProduct}
+        url={product.url}
+        open={openSubproduct}
+        close={() => setOpenSubproduct(false)}
+      />
+      <AddMeasureDialog
+        items={stock.packagingObjects}
+        refreshProduct={refreshProduct}
+        url={product.url}
+        open={openMeasure}
+        close={() => setOpenMeasure(false)}
+      />
+    </Container>
+  );
 }
 
 function SubProductListItem(props) {
-    const subprod = props.value;
-    const comp = props.composition;
-    const refreshProduct = props.refreshFunction;
+  const subprod = props.value;
+  const comp = props.composition;
+  const refreshProduct = props.refreshFunction;
 
-    function handleDelete() {
-        deleteComposition(comp.id).then(() => refreshProduct());
-    }
+  function handleDelete() {
+    deleteComposition(comp.id).then(() => refreshProduct());
+  }
 
-    return (
-        <ListItem>{`${subprod.name}: ${comp.quantity}`}
-            <IconButton edge='end' onClick={handleDelete}>
-                <HighlightOffIcon fontSize='small' />
-            </IconButton>
-        </ListItem>
-    )
+  return (
+    <ListItem>
+      {`${subprod.name}: ${comp.quantity}`}
+      <IconButton edge="end" onClick={handleDelete}>
+        <HighlightOffIcon fontSize="small" />
+      </IconButton>
+    </ListItem>
+  );
 }
 
-export default DetailExtra
+function MeasureListItem(props) {
+  const measure = props.value;
+  const refreshProduct = props.refreshFunction;
+
+  function handleDelete() {
+    refreshProduct();
+  }
+
+  return (
+    <ListItem>
+      {`${measure.name}: ${measure.size} - $${measure.price}`}
+      <IconButton edge="end" onClick={handleDelete}>
+        <HighlightOffIcon fontSize="small" />
+      </IconButton>
+    </ListItem>
+  );
+}
+
+export default DetailExtra;
