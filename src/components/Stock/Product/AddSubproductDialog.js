@@ -22,8 +22,7 @@ function AddSubproductDialog(props) {
   const refreshProduct = props.refreshProduct;
 
   function handleSubmit() {
-    createComposition(form);
-    refreshProduct();
+    createComposition(form).then(() => refreshProduct());
     props.close();
   }
 

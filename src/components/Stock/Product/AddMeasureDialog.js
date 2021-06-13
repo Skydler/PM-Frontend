@@ -23,8 +23,7 @@ function AddMeasureDialog(props) {
   const refreshProduct = props.refreshProduct;
 
   function handleSubmit() {
-    createMeasure(form);
-    refreshProduct();
+    createMeasure(form).then(() => refreshProduct());
     props.close();
   }
 
@@ -39,6 +38,11 @@ function AddMeasureDialog(props) {
         <FormControl>
           <Autocomplete
             multiple
+            filterSelectedOptions
+            onChange={(_, values) => {
+              const urls = values.map((value) => value.url);
+              setForm({ ...form, packaging_objects: urls });
+            }}
             options={props.items}
             getOptionLabel={(option) => option.name}
             renderInput={(param) => (
