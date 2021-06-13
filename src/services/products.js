@@ -58,3 +58,7 @@ export function getMeasuresOfProduct(product) {
   const { measures } = product;
   return fetchMultipleLinks(measures);
 }
+
+export function getProductComponents(id) {
+  return axios.get(`/api/products/${id}/components_data/`);
+}

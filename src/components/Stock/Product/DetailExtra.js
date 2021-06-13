@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
-  Container,
+  Grid,
   IconButton,
   List,
   ListItem,
@@ -9,12 +9,7 @@ import {
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
-import { getSubproducts, getPackagingObjects } from "services/currentUser";
-import {
-  deleteComposition,
-  getCompositionsOfProduct,
-  getMeasuresOfProduct,
-} from "services/products";
+import { deleteComposition, getProductComponents } from "services/products";
 
 import AddSubproductDialog from "./AddSubproductDialog";
 import AddMeasureDialog from "./AddMeasureDialog";
@@ -33,31 +28,9 @@ function DetailExtra(props) {
   });
 
   useEffect(() => {
-    // All of this filtering should be done by the backend
-    // but for now let's leave it this way so I can get a simple prototype working
-    getCompositionsOfProduct(product).then((compositions) => {
-      getSubproducts().then((totalSubproducts) => {
-        const CompSubproductUrls = compositions.map((comp) => comp.subproduct);
-        const notUsedSubproducts = totalSubproducts.filter(
-          (subp) => !CompSubproductUrls.includes(subp.url)
-        );
-        const usedSubproducts = totalSubproducts.filter((subp) =>
-          CompSubproductUrls.includes(subp.url)
-        );
-
-        getMeasuresOfProduct(product).then((measures) => {
-          getPackagingObjects().then((packaging) => {
-            setStock({
-              compositions: compositions,
-              usedSubproducts: usedSubproducts,
-              notUsedSubproducts: notUsedSubproducts,
-              packagingObjects: packaging,
-              measures: measures,
-            });
-          });
-        });
-      });
-    });
+    getProductComponents(product.id).then((response) =>
+      setStock(response.data)
+    );
   }, [product]);
 
   function renderIngredients() {
@@ -91,48 +64,58 @@ function DetailExtra(props) {
   }
 
   return (
-    <Container>
-      <p>Makeable amount: {product.makeable_amount}</p>
+    <Grid container>
+      <Grid item xs={12}>
+        <p>Makeable amount: {product.makeable_amount.toFixed(2)}</p>
+      </Grid>
 
-      <List
-        subheader={
-          <ListSubheader component="div">
-            Ingredients:
-            <IconButton edge="end" onClick={() => setOpenSubproduct(true)}>
-              <AddCircleOutlineIcon />
-            </IconButton>
-          </ListSubheader>
-        }
-      >
-        {renderIngredients()}
-      </List>
-      <List
-        subheader={
-          <ListSubheader component="div">
-            Measures:
-            <IconButton edge="end" onClick={() => setOpenMeasure(true)}>
-              <AddCircleOutlineIcon />
-            </IconButton>
-          </ListSubheader>
-        }
-      >
-        {renderMeasures()}
-      </List>
-      <AddSubproductDialog
-        items={stock.notUsedSubproducts}
-        refreshProduct={refreshProduct}
-        url={product.url}
-        open={openSubproduct}
-        close={() => setOpenSubproduct(false)}
-      />
-      <AddMeasureDialog
-        items={stock.packagingObjects}
-        refreshProduct={refreshProduct}
-        url={product.url}
-        open={openMeasure}
-        close={() => setOpenMeasure(false)}
-      />
-    </Container>
+      <Grid item xs={12} sm={6}>
+        <List
+          subheader={
+            <ListSubheader component="div">
+              <h2>
+                Ingredients:
+                <IconButton edge="end" onClick={() => setOpenSubproduct(true)}>
+                  <AddCircleOutlineIcon />
+                </IconButton>
+              </h2>
+            </ListSubheader>
+          }
+        >
+          {renderIngredients()}
+        </List>
+        <AddSubproductDialog
+          items={stock.notUsedSubproducts}
+          refreshProduct={refreshProduct}
+          url={product.url}
+          open={openSubproduct}
+          close={() => setOpenSubproduct(false)}
+        />
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <List
+          subheader={
+            <ListSubheader component="div">
+              <h2>
+                Measures:
+                <IconButton edge="end" onClick={() => setOpenMeasure(true)}>
+                  <AddCircleOutlineIcon />
+                </IconButton>
+              </h2>
+            </ListSubheader>
+          }
+        >
+          {renderMeasures()}
+        </List>
+        <AddMeasureDialog
+          items={stock.packagingObjects}
+          refreshProduct={refreshProduct}
+          url={product.url}
+          open={openMeasure}
+          close={() => setOpenMeasure(false)}
+        />
+      </Grid>
+    </Grid>
   );
 }
 
