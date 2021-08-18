@@ -1,9 +1,10 @@
 .home-title {
-    flex-grow: 1;
-    text-align: center;
+  flex-grow: 1;
+  text-align: center;
 }
 
 .home-body {
-    display: flex;
-    justify-content: space-around;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-around;
 }

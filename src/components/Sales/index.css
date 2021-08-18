@@ -1,0 +1,9 @@
+.form-container {
+  display: flex !important;
+  justify-content: space-evenly;
+  margin: 30px !important;
+}
+
+.autocomplete-input {
+  margin-bottom: 10px;
+}

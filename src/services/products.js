@@ -62,3 +62,7 @@ export function getMeasuresOfProduct(product) {
 export function getProductComponents(id) {
   return axios.get(`/api/products/${id}/components_data/`);
 }
+
+export function createSales(body) {
+  return axios.post("/api/sales/", body);
+}
